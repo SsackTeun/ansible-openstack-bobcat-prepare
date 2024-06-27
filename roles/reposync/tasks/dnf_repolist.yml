@@ -1,0 +1,6 @@
+---
+- name: Get repository list this system
+  ansible.builtin.shell:
+    cmd: dnf repolist | awk 'NR>1 {print $1}'
+  register: result
+

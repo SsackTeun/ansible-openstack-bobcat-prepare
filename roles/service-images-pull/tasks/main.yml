@@ -1,0 +1,7 @@
+---
+# tasks file for pull-image
+- name: pull image
+  containers.podman.podman_image:
+    name: "{{ item }}"
+    tag: "{{ tag_version }}"
+  loop: "{{ specific_tag }}"

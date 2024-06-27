@@ -1,0 +1,21 @@
+# EXTERNAL
+[download_target]
+download ansible_host=10.130.39.41
+
+# INTERNAL
+[ceph]
+cephvm1 ansible_host=10.130.39.21
+cephvm2 ansible_host=10.130.39.22
+cephvm3 ansible_host=10.130.39.23
+
+[compute]
+compute1 ansible_host=10.130.39.31
+compute2 ansible_host=10.130.39.32
+
+[controller]
+controller1 ansible_host=10.130.39.11
+controller2 ansible_host=10.130.39.12
+controller3 ansible_host=10.130.39.13
+
+[repository]
+repository ansible_host=10.130.39.41

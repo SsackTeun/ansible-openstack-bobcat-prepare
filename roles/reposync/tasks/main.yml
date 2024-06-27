@@ -1,0 +1,17 @@
+---
+# tasks file for reposync
+- name: dnf repolist
+  include_tasks: dnf_repolist.yml
+  register: result
+
+- name: reposync
+  block:
+    - ansible.builtin.shell:
+        cmd: "reposync --repo={{ item }} --download-path={{ reposync_path }} --download-metadata"
+        creates: "{{ reposync_path }}/{{ item }}"
+      loop: "{{ result.stdout_lines }}"
+  rescue:
+    - name: When interrupted Kill process
+      ansible.builtin.shell:
+        cmd: "ps aux | grep '[r]eposync' | awk '{print $2}' | xargs --no-run-if-empty kill -9"
+      ignore_errors: yes

@@ -1,0 +1,13 @@
+---
+# tasks file for create-local-repo
+- name: ensure dir
+  import_tasks: ensure_dir.yml
+
+- name: dnf repolist & get repoid, reponame
+  import_tasks: dnf_repolist_detail.yml 
+
+- name: Create YUM repository file
+  template:
+    src: create_repository_file.j2
+    dest: "{{ localrepo_file }}/{{ localrepo_filename }}.repo"
+     

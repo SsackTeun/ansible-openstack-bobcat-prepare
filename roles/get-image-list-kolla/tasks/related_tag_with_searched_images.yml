@@ -1,0 +1,8 @@
+---
+- name: podman search contain tags
+  containers.podman.podman_search:
+    term: "{{ item }}"
+    list_tags: True
+  loop: "{{ search_list }}"
+  register: search_with_tags
+

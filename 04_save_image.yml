@@ -1,0 +1,18 @@
+---
+- name: Registry
+  hosts: download
+  become: true
+  tasks:
+    - name: podman images 명령을 통해서 리스트 생성
+      ansible.builtin.import_role:
+        name: podman-images
+
+    - name:  
+      ansible.builtin.import_role:
+        name: ensure_dir
+      vars:
+        path: "{{ registry_image_path }}"
+
+    - ansible.builtin.import_role:
+        name: images-save
+

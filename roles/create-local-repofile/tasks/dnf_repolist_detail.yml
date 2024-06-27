@@ -1,0 +1,15 @@
+---
+# tasks file for get_repolist_detail
+- name: dnf repolist 에서 REPO_ID, REPO_NAME 추출
+  command: dnf repolist
+  register: yum_repolist_output
+
+- name: Extract repodata
+  set_fact:
+    repodata: []
+
+- name: Extract repodata
+  set_fact:
+    repodata: "{{ repodata + [{'repoid': item.split()[0], 'reponame': item.split(maxsplit=1)[1]}] }}"
+  loop: "{{ yum_repolist_output.stdout_lines[1:] }}"
+

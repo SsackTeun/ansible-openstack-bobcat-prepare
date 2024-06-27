@@ -1,0 +1,48 @@
+root_path: /openstack-files
+##=================== REPOSITORY ======================##
+##############
+## reposync
+##############
+reposync_path: "{{ root_path }}/repository"
+
+##############
+## add-common-repo
+##############
+packages:
+  - centos-release-openstack-bobcat
+  - centos-release-ceph-reef
+  - cephadm
+  - yum-utils
+  - epel-release
+  - ceph-common
+
+##############
+## add-cephadm-repo
+##############
+ceph_version: reef
+
+##====================== REGISTRY =====================##
+##############
+## create-local-repofile
+##############
+localrepo_baseurl: http://repository
+localrepo_filename: local
+localrepo_file: "{{ reposync_path }}"
+
+##############
+## get-image-list-kolla
+##############
+kolla_registry_prefix: docker.io/kolla
+tag_version: "2023.2-rocky-9"
+
+##############
+# podman-search
+# ############
+
+
+##############
+## images-save
+##############
+registry_image_path: "{{ root_path }}/registry"
+
+

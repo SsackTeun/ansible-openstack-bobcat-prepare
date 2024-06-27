@@ -1,0 +1,8 @@
+---
+- name: REPOSYNC 
+  hosts: download_target
+  become: true
+  roles:
+    - add-common-repo
+    - add-cephadm-repo
+    - reposync

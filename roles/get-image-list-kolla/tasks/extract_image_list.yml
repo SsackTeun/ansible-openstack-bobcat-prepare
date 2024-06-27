@@ -1,0 +1,5 @@
+---
+- name: extract image names
+  set_fact:
+    search_list: "{{ podman_search_result.results | map(attribute='images') | flatten | map(attribute='Name') | list  }}"
+

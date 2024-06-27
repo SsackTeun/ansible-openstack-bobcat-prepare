@@ -1,0 +1,6 @@
+---
+# tasks file for pull-image-list-kolla/
+- name: 서비스 리스트를 파일로 부터 읽음
+  set_fact:
+    services: "{{ lookup('file', 'openstack-kolla-services').splitlines() }}"
+

@@ -1,0 +1,9 @@
+---
+# tasks file for roles/images-save
+- name: images-save
+  containers.podman.podman_save:
+    image: "{{ item }}"
+    dest: "{{ registry_image_path }}/{{ item | replace('/', '_') | replace(':', '_') }}.tar"
+  loop: "{{ result.stdout_lines }}"
+
+

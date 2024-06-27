@@ -1,0 +1,16 @@
+---
+- name: debug
+  debug:
+    var: tag_version
+
+- name: generate query string
+  set_fact:
+    query: "[].images[?contains(Tags, '{{ tag_version }}')].Name"
+
+- name: debug
+  debug:
+    var: query
+
+- name: tag
+  set_fact:
+    specific_tag: "{{ search_with_tags.results | json_query(query | string ) | flatten }}"

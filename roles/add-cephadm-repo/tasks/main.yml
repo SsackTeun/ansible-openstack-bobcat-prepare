@@ -1,0 +1,9 @@
+---
+- name: Add Ceph-source / Ceph-noarch
+  command:
+    cmd: cephadm add-repo --release "{{ ceph_version }}"
+  register: result
+
+- name: 
+  debug:
+    var: result

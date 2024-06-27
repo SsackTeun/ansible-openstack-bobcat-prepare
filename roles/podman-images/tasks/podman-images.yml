@@ -1,0 +1,5 @@
+---
+- name: List Podman images
+  shell: "podman images -n --format '{% raw %}{{.Repository}}:{{.Tag}}{% endraw %}' --filter 'reference=*:{{ tag_version }}'"
+  register: result
+

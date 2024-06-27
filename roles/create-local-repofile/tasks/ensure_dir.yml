@@ -1,0 +1,6 @@
+---
+- name: ensure_dir
+  import_role:
+    name: ensure_dir
+  vars:
+    path: "{{ localrepo_file }}"

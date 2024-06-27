@@ -1,0 +1,3 @@
+---
+- name: podman_search
+  import_tasks: podman-images.yml

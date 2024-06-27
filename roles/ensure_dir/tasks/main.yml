@@ -1,0 +1,7 @@
+---
+# tasks file for roles/ensure_dir/
+- name: 경로 생성
+  file:
+    path: "{{ path }}"
+    state: directory
+    mode: '0755'
