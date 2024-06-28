@@ -1,0 +1,7 @@
+---
+- name: repofile create
+  hosts: download
+  become: true
+  roles:
+    - get-repolist-detail
+    - create-local-repofile    

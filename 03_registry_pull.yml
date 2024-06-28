@@ -8,10 +8,6 @@
     - ansible.builtin.import_role:
         name: get-image-list-kolla
 
-    - name:
-      debug:
-        var: specific_tag
-
     # Pull Image 
     - ansible.builtin.import_role:
         name: service-images-pull
