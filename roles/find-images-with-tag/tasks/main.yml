@@ -1,14 +1,11 @@
 ---
-- name: 서비스 목록리스트를 파일에서 읽기
-  import_tasks: lookup_services_list.yml
-
-- name: 서비스 목록 기반으로 이미지 목록 서치
+- name: 서비스 이름으로 이미지검색
   import_tasks: podman_search.yml
 
-- name: 이미지 목록을 추출
+- name: 검색된 이미지리스트 추출
   import_tasks: extract_image_list.yml
 
-- name: 추출된 이미지 목록기준으로 관련 태그를 수집
+- name: 추출된 이미지리스트에서 찾
   import_tasks: related_tag_with_searched_images.yml
 
 - name: 태그중에 특정태그가 포함되어 있는지 체크 후, image 목록을 다시 반환

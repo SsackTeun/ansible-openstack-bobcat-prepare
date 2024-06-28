@@ -30,16 +30,74 @@ localrepo_filename: local
 localrepo_file: "{{ reposync_path }}"
 
 ##############
-## get-image-list-kolla
+## find_images_with_tag 
 ##############
-kolla_registry_prefix: docker.io/kolla
-tag_version: "2023.2-rocky-9"
+kolla_registry_prefix: "docker.io/kolla"
+kolla_tag_version: "2023.2-rocky-9"
+kolla_services:
+  - aodh
+  - barbican
+  - blazar
+  - ceilometer
+  - ceph_rgw
+  - cinder
+  - cloudkitty
+  - collectd
+  - cyborg
+  - designate
+  - etcd
+  - glance
+  - gnocchi
+  - grafana
+  - hacluster
+  - heat
+  - horizon
+  - influxdb
+  - ironic
+  - iscsid
+  - keystone
+  - kuryr
+  - letsencrypt
+  - loadbalancer
+  - magnum
+  - manila
+  - mariadb
+  - masakari
+  - memcached
+  - mistral
+  - multipathd
+  - neutron
+  - nova
+  - octavia
+  - opensearch
+  - opensearch_dashboards
+  - openvswitch_enable_ovs_dpdk
+  - ovn
+  - placement
+  - prometheus
+  - rabbitmq
+  - redis
+  - skyline
+  - swift
+  - tacker
+  - telegraf
+  - trove
+  - venus
+  - watcher
+  - zun
 
 ##############
-# podman-search
+# service-images-pull
 # ############
-
-
+etc_images:
+  - nginx:1.25.5
+  - registry:2.8.3
+  - quay.io/ceph/ceph:v18
+  - quay.io/ceph/ceph-grafana:9.4.7
+  - quay.io/prometheus/prometheus:v2.43.0
+  - quay.io/prometheus/alertmanager:v0.25.0
+  - quay.io/prometheus/node-exporter:v1.5.0
+    
 ##############
 ## images-save
 ##############

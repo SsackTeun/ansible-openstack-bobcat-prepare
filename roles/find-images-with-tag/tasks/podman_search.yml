@@ -1,7 +1,7 @@
 ---
 - name: 서비스 이름으로 레지스트리를 검색하여, 관련된 image 목록을 얻음
   containers.podman.podman_search:
-    term: "{{ kolla_registry_prefix }}/{{ item }}"
+    term: "{{ registry_prefix }}/{{ item }}"
   loop: "{{ services }}"
   register: podman_search_result
 

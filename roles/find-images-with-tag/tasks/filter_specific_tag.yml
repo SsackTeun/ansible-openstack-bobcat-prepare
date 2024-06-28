@@ -13,4 +13,7 @@
 
 - name: tag
   set_fact:
-    specific_tag: "{{ search_with_tags.results | json_query(query | string ) | flatten }}"
+    image_list: "{{ search_with_tags.results | json_query(query | string ) | flatten | map('regex_replace', '(.+)', '\\1:' ~ tag_version ) | flatten | list }}"
+ 
+
+      

@@ -1,7 +1,13 @@
 ---
-# tasks file for pull-image
+# input : docker.io/kolla/base:2023.2-rocky-9
+# split with :
+#   - name: docker.io/kolla/base
+#   - tag: 2023.2-rocky-9
+# output : pull image
 - name: pull image
   containers.podman.podman_image:
-    name: "{{ item }}"
-    tag: "{{ tag_version }}"
-  loop: "{{ specific_tag }}"
+    name: "{{ item | regex_replace(':.*', '') }}"
+    tag: "{{ item | regex_replace('.*:', '') }}"
+  loop: "{{ pull_images }}"
+  register: save_images_result
+
