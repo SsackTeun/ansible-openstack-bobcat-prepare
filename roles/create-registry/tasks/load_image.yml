@@ -1,0 +1,17 @@
+---
+# tasks file for roles/import_image
+- name: find image files
+  find:
+    paths: "{{ registry_file_path }}"
+    patterns: "*.tar"
+    recurse: yes
+  register: image_files
+
+- name: find files result
+  debug:
+    msg: "{{ image_files.files | map(attribute='path') | list }}"
+
+- name: load image
+  containers.podman.podman_load:
+      input: "{{ item }}"
+  loop: "{{ image_files.files |  map(attribute='path') |  list }}"

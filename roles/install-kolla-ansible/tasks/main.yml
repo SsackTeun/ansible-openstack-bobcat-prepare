@@ -1,0 +1,26 @@
+---
+# tasks file for roles/install-kolla-ansible
+- name: Git 에서 Kolla 패키지 받기
+  ansible.builtin.git:
+    repo: "{{ item.git_repo }}"
+    dest: "{{ item.git_clone_dest }}"
+    version: "{{ item.version }}"
+  loop: "{{ gits }}"
+  loop_control:
+    loop_var: item
+
+- name: PIP Install Kolla, Kolla-Ansible
+  ansible.builtin.pip:
+    name: "{{ item.git_filename }}"
+  loop: "{{ gits }}"
+  loop_control:
+    loop_var: item
+
+- name: Kolla-Ansible 의존성 설치
+  ansible.builtin.shell: kolla-ansible install-deps
+
+- name: password.yml, global.yml -> /etc/kolla 복사
+  ansible.builtin.shell: cp -r "{{ copy_kolla_config }}" /etc/.
+
+- name: /etc/kolla password.yml 에 패스워드 생성
+  ansible.builtin.shell: kolla-genpwd

@@ -1,0 +1,45 @@
+---
+# tasks file for roles/registry_server
+- name: htpasswd 명령을 위한 httpd-tools 설치
+  ansible.builtin.dnf:
+    name: httpd-tools
+    state: present
+
+- name: htpasswd 저장할 위치 생성
+  ansible.builtin.file:
+    path: "{{ private_registry_server_auth }}"
+    state: directory
+    mode: '0755'
+
+- name: htpasswd 파일 생성
+  ansible.builtin.shell:
+    cmd: "htpasswd -Bbn admin admin > {{ private_registry_server_auth }}/htpasswd"
+
+- name: 디렉토리 존재 검사(마운트 디렉토리)
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ private_registry_server_auth }}"
+- name: 레지스트리 컨테이너 실행
+  containers.podman.podman_container:
+    name: registry
+    image: "registry:2"
+    state: started
+    recreate: true
+    hostname: registry
+    publish:
+      - 5000:5000
+    volumes:
+      - "{{ private_registry_server_auth }}:/auth"
+    env:
+      REGISTRY_AUTH: "htpasswd"
+      REGISTRY_AUTH_HTPASSWD_REALM: "Registry Realm"
+      REGISTRY_AUTH_HTPASSWD_PATH: "/auth/htpasswd"
+    restart_policy: unless-stopped
+
+- name: copy file
+  copy:
+    src: "{{ role_path }}/files/registries.conf"
+    dest: "/etc/containers/registries.conf"

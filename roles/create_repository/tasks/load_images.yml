@@ -1,0 +1,16 @@
+---
+# tasks file for roles/create_repository
+- name: find image files (.tar file)
+  find:
+    paths: "{{ registry_image_path }}/"
+    patterns: "*nginx*.tar"
+    recurse: yes
+  register: image_files
+
+- debug:
+    msg: "{{ image_files }}"
+
+- name: /openstack/registry/ 이미지 import
+  containers.podman.podman_load:
+    input: "{{ item }}"
+  loop: "{{ image_files.files | map(attribute='path') | list }}"

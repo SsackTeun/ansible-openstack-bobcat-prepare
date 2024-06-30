@@ -1,0 +1,6 @@
+---
+- name: repofile create
+  hosts: localhost
+  become: true
+  roles:
+    - install-kolla-ansible

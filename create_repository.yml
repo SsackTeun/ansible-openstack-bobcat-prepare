@@ -1,0 +1,12 @@
+---
+- name: CREATE REPOSITORY SERVER
+  hosts: download
+  become: true
+  tasks:
+    - name: create_repository
+      include_role:
+        name: create_repository
+      vars:
+        repository_file_path: "{{ localrepo_file }}"
+    
+

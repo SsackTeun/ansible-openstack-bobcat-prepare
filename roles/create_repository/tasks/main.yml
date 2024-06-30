@@ -1,0 +1,7 @@
+---
+# tasks file for roles/create_repository
+- name: nginx image load
+  import_tasks: load_images.yml 
+
+- name: nginx deply
+  import_tasks: nginx_deploy.yml 

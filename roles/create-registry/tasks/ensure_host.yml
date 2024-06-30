@@ -1,0 +1,16 @@
+---
+- name: parse the name of private_registry_url (cut off port)
+  set_fact:
+    registry_hosts: "{{ private_registry_ip }} {{ private_registry_url | regex_replace(':[0-9]+$', '') }}"
+
+- name: Check if /etc/hosts contains myhost.local
+  ansible.builtin.command: grep -q '{{ private_registry_hosts }}' /etc/hosts
+  register: grep_result
+  ignore_errors: true
+
+- name: Add myhost.local to /etc/hosts if not present
+  ansible.builtin.blockinfile:
+    path: /etc/hosts
+    block: |
+      {{ registry_hosts | replace('"', '') }}
+  when: grep_result.rc != 0

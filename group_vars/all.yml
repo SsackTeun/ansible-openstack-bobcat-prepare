@@ -1,3 +1,4 @@
+##=================== PATH ============================##
 root_path: /openstack-files
 ##=================== REPOSITORY ======================##
 ##############
@@ -21,7 +22,6 @@ packages:
 ##############
 ceph_version: reef
 
-##====================== REGISTRY =====================##
 ##############
 ## create-local-repofile
 ##############
@@ -29,6 +29,7 @@ localrepo_baseurl: http://repository
 localrepo_filename: local
 localrepo_file: "{{ reposync_path }}"
 
+##====================== REGISTRY =====================##
 ##############
 ## find_images_with_tag 
 ##############
@@ -103,4 +104,33 @@ etc_images:
 ##############
 registry_image_path: "{{ root_path }}/registry"
 
+##================= KOLLA-ANSIBLE INSTALL ==================##
+# 현재 디렉토리의 전체 경로를 가져옵니다.
+current_directory: "{{ lookup('pipe', 'pwd') }}"
+local_root_path:  "/{{ current_directory.split('/') | select('match', '[^ ]') | first }}"
+venv_path: "{{ local_root_path }}/venv"
+copy_kolla_config: "{{ venv_path }}/share/kolla-ansible/etc_examples/kolla"
+dest_root: "{{ local_root_path }}/git"
+gits:
+  - git_repo: "https://opendev.org/openstack/kolla.git"
+    git_clone_dest: "{{ dest_root }}/kolla"
+    version: "stable/2023.2"
+    git_filename: "file:///{{ dest_root }}/kolla"
 
+  - git_repo: "https://opendev.org/openstack/kolla-ansible.git"
+    git_clone_dest: "{{ dest_root }}/kolla-ansible"
+    version: "stable/2023.2"
+    git_filename: "file:///{{ dest_root }}/kolla-ansible"
+
+##================  NGINX SERVER (REPOSITORY) =============##
+nginx_conf_copy_path: "{{ localrepo_file }}"
+nginx_port: "80:80"
+nginx_hostname: "root"
+
+##================  REGISTRY SERVER =======================##
+private_registry_hosts: "myregistry"
+private_registry_ip: "10.130.39.41"
+private_registry_url: "myregistry:5000"
+private_registry_username: admin
+private_registry_password: admin
+private_registry_server_auth: "{{ registry_image_path }}/auth"
