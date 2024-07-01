@@ -1,0 +1,19 @@
+---
+# tasks file for ceph-config
+- name: mgr-image-config
+  ansible.builtin.include_tasks: mgr-image-config.yml
+
+- name: copy-ceph-pub-key
+  ansible.builtin.include_tasks: copy-ceph-pub-key.yml
+
+- name: ceph-orch-host-add
+  ansible.builtin.include_tasks: ceph-orch-host-add.yml
+
+- name: ceph-orch-add-label
+  ansible.builtin.include_tasks: ceph-orch-add-label.yml
+
+- name: mon service apply
+  ansible.builtin.include_tasks: mon-service-apply.yml
+
+    #- name: ceph-orch-disk.yml
+    #ansible.builtin.include_tasks: ceph-orch-disk.yml

@@ -10,4 +10,19 @@
   template:
     src: create_repository_file.j2
     dest: "{{ localrepo_file }}/{{ localrepo_filename }}.repo"
-     
+
+- name:
+  command: "cat {{ localrepo_file }}/{{ localrepo_filename }}.repo"
+  register: repofile_result
+
+- name:
+  debug:
+    msg: "{{ repofile_result.stdout_lines }}"
+
+- name: Save repository file
+  copy:
+    content: "{{ repofile_result.stdout_lines |  join('\n') }}"
+    dest: "{{ role_path }}/files/local.repo"
+  delegate_to: localhost
+
+

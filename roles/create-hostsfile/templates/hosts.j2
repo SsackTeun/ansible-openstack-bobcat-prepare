@@ -1,0 +1,8 @@
+# templates/hosts.j2
+127.0.0.1   localhost
+::1         localhost
+
+{% for host in groups['all'] | sort  %}
+{{ hostvars[host].ansible_host }} {{ host }}
+{% endfor %}
+

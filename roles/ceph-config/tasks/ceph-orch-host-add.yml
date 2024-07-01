@@ -1,0 +1,11 @@
+- name: CEPH 그룹의 첫번째 노드 선택
+  set_fact:
+    primary_host: "{{ groups['ceph'] | first }}"
+
+- name: ceph orch host add
+  ansible.builtin.shell:
+    cmd: "ceph orch host add {{ hostvars[item]['ansible_hostname'] }} {{ hostvars[item]['ansible_default_ipv4']['address'] }}"
+  run_once: true
+  delegate_to: "{{ primary_host }}"
+  loop: "{{ groups['ceph'] | difference([primary_host]) }}"
+  async: 60

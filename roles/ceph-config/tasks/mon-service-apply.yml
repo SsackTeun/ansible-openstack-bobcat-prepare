@@ -1,0 +1,10 @@
+- name: apply service
+  ansible.builtin.shell:
+    cmd: "ceph orch apply {{ item }}"
+  loop:
+    - node-exporter
+    - prometheus
+    - grafana
+    - alertmanager
+  delegate_to: "{{ groups['ceph'] | first }}"
+  run_once: true

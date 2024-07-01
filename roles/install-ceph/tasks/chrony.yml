@@ -1,0 +1,42 @@
+---
+- name: Chrony Check
+  ansible.builtin.dnf:
+    name: chrony
+    state: present
+
+- name: Chrony.conf Backup
+  ansible.builtin.copy:
+    src: /etc/chrony.conf
+    dest: /etc/chrony.conf.bak
+    remote_src: yes
+    force: yes
+
+- name: Chrony.conf
+  ansible.builtin.lineinfile:
+    path: /etc/chrony.conf
+    insertafter: '^# Please consider joining the pool \(https://www.pool.ntp.org/join.html\).'
+    line: 'server {{ chrony_server_host }} iburst'
+    state: present
+
+- name: Restart Chrony Service
+  ansible.builtin.service:
+    name: chronyd
+    state: restarted
+
+- name: Chrony sources
+  ansible.builtin.shell:
+    cmd: chronyc sources
+  register: chronyc_sources_result
+
+- name: Chrony sources result
+  debug:
+    msg: "{{ chronyc_sources_result }}"
+
+- name: 시간 동기화 Sync
+  ansible.builtin.shell:
+    cmd: "hwclock --hctosys; hwclock --show"
+  register: sync_result 
+
+- name: sync result
+  debug:
+    msg: "{{ sync_result }}"

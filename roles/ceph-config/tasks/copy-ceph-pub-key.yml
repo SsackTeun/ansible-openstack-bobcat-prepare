@@ -1,0 +1,17 @@
+- name: ceph firstnode
+  set_fact:
+    ceph_host: "{{ groups['ceph'] | first  }}"
+
+- name: copy ceph key
+  shell:
+    cmd: "ceph cephadm get-pub-key"
+  register: ceph_pub_key
+  delegate_to: "{{ ceph_host }}"
+  run_once: true
+
+- name: copy ceph key
+  shell: "echo {{ ceph_pub_key.stdout }} >> ~/.ssh/authorized_keys"
+  delegate_to: "{{ item }}"
+  run_once: true
+  loop: "{{ groups['ceph'] | difference([ceph_host]) }}"
+

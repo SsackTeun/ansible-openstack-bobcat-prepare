@@ -1,0 +1,6 @@
+- name: ceph orch host label add
+  shell:
+    cmd: "ceph orch host label add {{ item['name'] }} {{ item['labels'] }}"
+  loop: "{{ ceph_node }}"
+  delegate_to: "{{ groups['ceph'] | first }}"
+  run_once: true

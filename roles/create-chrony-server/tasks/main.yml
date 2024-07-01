@@ -1,0 +1,31 @@
+---
+# tasks file for roles/create-chrony-server
+- name: Install chrony package
+  ansible.builtin.package:
+    name: chrony
+    state: present
+
+- name: Configure chrony servers
+  ansible.builtin.template:
+    src: chrony.conf.j2
+    dest: /etc/chrony.conf
+  notify: Restart chronyd
+
+- name: Open NTP port (UDP 123) in firewall
+  ansible.builtin.command:
+    cmd: firewall-cmd --permanent --add-port=123/udp
+  ignore_errors: yes
+
+- name: Reload firewall to apply changes
+  ansible.builtin.command:
+    cmd: firewall-cmd --reload
+  ignore_errors: yes
+
+- name: Verify NTP port is open
+  ansible.builtin.command:
+    cmd: firewall-cmd --list-all
+  register: firewall_status
+
+- name: Print firewall status
+  ansible.builtin.debug:
+    var: firewall_status.stdout

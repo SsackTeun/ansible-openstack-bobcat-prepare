@@ -1,0 +1,7 @@
+- name: image-config
+  ansible.builtin.shell:
+    cmd: "{{ item }}"
+  loop: "{{ custom_images }}"
+  delegate_to: "{{ groups['ceph'] | first }}"
+  run_once: true
+

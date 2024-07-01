@@ -1,0 +1,9 @@
+---
+# tasks file for roles/create-hostsfile
+- name: Update /etc/hosts file from template
+  ansible.builtin.template:
+    src: hosts.j2
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: '0644'

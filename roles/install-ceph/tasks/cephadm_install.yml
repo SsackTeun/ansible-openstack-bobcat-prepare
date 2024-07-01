@@ -1,0 +1,22 @@
+---
+- name: cephadm install check
+  ansible.builtin.dnf:
+    name: cephadm
+    state: present
+
+- name: ceph-common 설치
+  ansible.builtin.dnf:
+    name: ceph-common
+    state: present
+
+- name: 파일 생성ceph_ssh_config
+  ansible.builtin.copy:
+    dest: "/root/ceph_ssh_config"  # 적절한 경로로 변경
+    content: |
+      Host *
+        User root
+        Port 22
+        StrictHostKeyChecking no
+        UserKnownHostsFile /dev/null
+        ConnectTimeout=30
+

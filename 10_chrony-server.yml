@@ -1,0 +1,6 @@
+---
+- name: repofile create
+  hosts: chrony-server
+  become: true
+  roles:
+    - create-chrony-server

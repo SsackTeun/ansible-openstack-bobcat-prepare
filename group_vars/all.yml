@@ -1,3 +1,35 @@
+##================== HOST ===============================##
+controllers:
+  - ip: 10.130.39.26
+    hostname: controller1
+
+  - ip: 10.130.39.27
+    hostname: controller2
+
+cephs:
+  - ip: 10.130.39.21
+    hostname: ceph-1
+    labels: mgr,mon,osd
+
+  - ip: 10.130.39.22
+    hostname: ceph-2
+    labels: mon,mds,nfs,osd
+
+  - ip: 10.130.39.23
+    hostname: ceph-3
+    labels: mon,rgw,osd
+
+computes:
+  - ip: 10.130.39.24
+    hostname: compute1
+
+  - ip: 10.130.39.25
+    hostname: compute2
+
+repository:
+  - ip: 10.130.39.41
+    hostname: repository myregistry time.local.net
+
 ##=================== PATH ============================##
 root_path: /openstack-files
 ##=================== REPOSITORY ======================##
@@ -16,7 +48,8 @@ packages:
   - yum-utils
   - epel-release
   - ceph-common
-
+  - centos-release-nfv-openvswitch
+  - centos-release-rabbitmq-38
 ##############
 ## add-cephadm-repo
 ##############
@@ -129,8 +162,34 @@ nginx_hostname: "root"
 
 ##================  REGISTRY SERVER =======================##
 private_registry_hosts: "myregistry"
-private_registry_ip: "10.130.39.41"
+private_registry_ip: "{{ groups['repository'][0]['ansible_default_ipv4']['address'] }}"
 private_registry_url: "myregistry:5000"
 private_registry_username: admin
 private_registry_password: admin
 private_registry_server_auth: "{{ registry_image_path }}/auth"
+
+##=============== CEPH_INSTALL ============================##
+chrony_server_host: "{{ groups['chrony-server'] | first }}"
+chrony_server_cidr: "10.130.39.0/24"
+# ceph config set mgr mgr/cephadm/container_image
+ceph_image: ceph/ceph:v18
+grafana: ceph/ceph-grafana:9.4.7
+prometheus: prometheus/prometheus:v2.43.0
+alertmanager: prometheus/alertmanager:v0.25.0
+node_exporter: prometheus/node-exporter:v1.5.0
+
+custom_images:
+  - "ceph config set mgr mgr/cephadm/container_image_prometheus {{ private_registry_url }}/{{ prometheus }}"
+  - "ceph config set mgr mgr/cephadm/container_image_grafana {{ private_registry_url }}/{{ grafana }}"
+  - "ceph config set mgr mgr/cephadm/container_image_alertmanager {{ private_registry_url }}/{{ alertmanager }}"
+  - "ceph config set mgr mgr/cephadm/container_image_node_exporter {{ private_registry_url }}/{{ node_exporter }}"
+
+# ceph-orch-label
+ceph_node:
+  - name: "{{ groups['ceph'][0] }}"
+    labels: mgr,mon,osd
+  - name: "{{ groups['ceph'][1] }}"
+    labels: mon,mds,nfs,osd
+  - name: "{{ groups['ceph'][2] }}"
+    labels: mon,rgw,osd
+

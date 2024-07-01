@@ -1,0 +1,13 @@
+---
+# tasks file for roles/ceph-remove
+- name: rm-cluster
+  shell:
+    cmd: >
+      cephadm ls | jq -r '.[].fsid' | while read -r fsid; do cephadm rm-cluster --fsid "$fsid" --force; done
+  delegate_to: "{{ groups['ceph'] | first }}"
+  run_once: true
+
+- name: podman rm -f $(podman ps -q)
+  shell:
+    cmd: >
+      podman rm -f $(podman ps -q)

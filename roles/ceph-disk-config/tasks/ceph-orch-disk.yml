@@ -1,0 +1,32 @@
+- name: CEPH 그룹의 첫번째 노드 선택
+  set_fact:
+    primary_host: "{{ groups['ceph'] | first }}"
+
+- name: ceph orch device ls
+  ansible.builtin.shell:
+    cmd: "ceph orch device ls | awk 'NR > 1 {print $1, $2}'"
+  register: devices
+  run_once: true
+  delegate_to: "{{ primary_host }}"
+
+- name: ceph orch device ls
+  debug:
+    var: "devices.stdout_lines"
+  run_once: true
+  delegate_to: "{{ primary_host }}"
+
+- name: Zap devices
+  ansible.builtin.shell: "ceph orch device zap {{ item.split()[0] }} {{ item.split()[1] }} --force"
+  loop: "{{ devices.stdout_lines }}"
+  loop_control:
+    loop_var: item
+  delegate_to: "{{ primary_host }}"
+  run_once: true
+
+- name: osd devices
+  ansible.builtin.shell: "ceph orch daemon add osd {{ item.split()[0] }}:{{ item.split()[1] }}"
+  loop: "{{ devices.stdout_lines }}"
+  loop_control:
+    loop_var: item
+  delegate_to: "{{ primary_host }}"
+  run_once: true

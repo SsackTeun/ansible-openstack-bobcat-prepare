@@ -1,0 +1,33 @@
+---
+- name: Get default IPv4 addresses of ceph first-node
+  set_fact:
+    mon_ip: "{{ hostvars[groups['ceph'][0]].ansible_default_ipv4.address }}"
+  delegate_to: "{{ groups['ceph'] | first }}"
+  run_once: true
+
+- name: Confirm Ceph bootstrap node ip
+  debug:
+    var: "{{ mon_ip }}"
+  delegate_to: "{{ groups['ceph'] | first }}"
+  run_once: true
+
+- name: bootstrap
+  ansible.builtin.shell:
+    cmd: >
+       cephadm --image myregistry:5000/ceph/ceph:v18 \
+               bootstrap --mon-ip {{ mon_ip }} \
+               --ssh-config /root/ceph_ssh_config \
+               --registry-url {{ private_registry_url }} \
+               --registry-username admin \
+               --registry-password admin \
+               --skip-monitoring-stack \
+               --allow-overwrite 
+  delegate_to: "{{ groups['ceph'] | first }}"
+  run_once: true
+  register: bootstrap_result
+
+- name: result
+  debug:
+    msg: "{{ bootstrap_result }}"
+  delegate_to: "{{ groups['ceph'] | first }}"
+  run_once: true

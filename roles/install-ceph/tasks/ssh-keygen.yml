@@ -1,0 +1,33 @@
+---
+- name: CEPH 그룹의 첫번째 노드 선택
+  set_fact:
+    primary_host: "{{ groups['ceph'] | first }}"
+
+- name: 첫번쨰 값
+  debug:
+    msg: "{{ primary_host }}"
+  delegate_to: "{{ primary_host }}"
+
+- name: create ssh-keygen
+  ansible.builtin.shell:
+    cmd: "ssh-keygen -b 2048 -t rsa -f /root/.ssh/id_rsa -q -N ''"
+  args:
+    creates: "/root/.ssh/id_rsa"
+  delegate_to: "{{ primary_host }}"
+  ignore_errors: yes
+  run_once: true
+
+- name: read id_rsa.pub
+  command: "cat /root/.ssh/id_rsa.pub"
+  register: id_pub
+  run_once: true
+  delegate_to: "{{ primary_host }}"
+
+- name: remote lineinfile for authorized_keys
+  lineinfile:
+    dest: /root/.ssh/authorized_keys
+    line: "{{ id_pub.stdout }}"
+  ignore_errors: yes
+  run_once: true
+  delegate_to: "{{ item }}"
+  with_items: "{{ groups['ceph'] | difference([primary_host]) }}"

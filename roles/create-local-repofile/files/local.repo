@@ -1,0 +1,71 @@
+[Ceph]
+name=Ceph x86_64
+baseurl=http://repository/Ceph
+enabled=1
+gpgcheck=0
+
+[Ceph-noarch]
+name=Ceph noarch
+baseurl=http://repository/Ceph-noarch
+enabled=1
+gpgcheck=0
+
+[Ceph-source]
+name=Ceph SRPMS
+baseurl=http://repository/Ceph-source
+enabled=1
+gpgcheck=0
+
+[appstream]
+name=Rocky Linux 9 - AppStream
+baseurl=http://repository/appstream
+enabled=1
+gpgcheck=0
+
+[baseos]
+name=Rocky Linux 9 - BaseOS
+baseurl=http://repository/baseos
+enabled=1
+gpgcheck=0
+
+[centos-ceph-reef]
+name=CentOS-9-stream - Ceph Reef
+baseurl=http://repository/centos-ceph-reef
+enabled=1
+gpgcheck=0
+
+[centos-nfv-openvswitch]
+name=NFV SIG RHEL 9 - NFV OpenvSwitch
+baseurl=http://repository/centos-nfv-openvswitch
+enabled=1
+gpgcheck=0
+
+[centos-openstack-bobcat]
+name=CentOS-9 - OpenStack bobcat
+baseurl=http://repository/centos-openstack-bobcat
+enabled=1
+gpgcheck=0
+
+[centos-rabbitmq-38]
+name=CentOS-9 - RabbitMQ 38
+baseurl=http://repository/centos-rabbitmq-38
+enabled=1
+gpgcheck=0
+
+[epel]
+name=Extra Packages for Enterprise Linux 9 - x86_64
+baseurl=http://repository/epel
+enabled=1
+gpgcheck=0
+
+[epel-cisco-openh264]
+name=Extra Packages for Enterprise Linux 9 openh264 (From Cisco) - x86_64
+baseurl=http://repository/epel-cisco-openh264
+enabled=1
+gpgcheck=0
+
+[extras]
+name=Rocky Linux 9 - Extras
+baseurl=http://repository/extras
+enabled=1
+gpgcheck=0

@@ -1,0 +1,13 @@
+# chrony.conf.j2
+# /etc/chrony/chrony.conf configuration for chronyd servers
+
+# Use public NTP pool servers
+server {{ chrony_server_host }} iburst
+
+# Allow LAN clients to synchronize time with this server
+allow {{ chrony_server_cidr }}
+
+# Drift file location
+driftfile /var/lib/chrony/drift
+
+local stratum 10

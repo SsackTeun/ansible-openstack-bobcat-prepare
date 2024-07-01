@@ -1,0 +1,10 @@
+---
+- name: CREATE REPOSITORY SERVER
+  hosts: ceph 
+  become: true
+  tasks:
+    - name: ceph-remove 
+      include_role:
+        name: ceph-remove
+    
+

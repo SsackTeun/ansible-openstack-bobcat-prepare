@@ -1,0 +1,10 @@
+---
+- name: Ceph Config
+  hosts: ceph 
+  become: true
+  tasks:
+    - name: 
+      include_role:
+        name: ceph-config
+    
+
