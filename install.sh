@@ -9,8 +9,9 @@ pip install -r requirements.txt
 pip install -U pip
 
 # ansible 설치
-#pip install 'ansible-core>=2.14,<2.16'
 pip install 'ansible-core>=2.14,<2.16'
+
+git clone https://github.com/SsackTeun/ansible-openstack-bobcat.git /openstack-ansible
 
 # yum 패키지 설치
 dnf install -y gcc git python3-libselinux libffi-devel openssl-devel openssl net-tools traceroute vim unzip iputils sshpass python3-devel 
