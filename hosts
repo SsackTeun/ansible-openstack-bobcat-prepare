@@ -1,0 +1,17 @@
+# templates/hosts.j2
+127.0.0.1   localhost
+::1         localhost
+
+10.130.39.21 ceph-1
+10.130.39.22 ceph-2
+10.130.39.23 ceph-3
+10.130.39.41 chrony-server
+10.130.39.31 compute1
+10.130.39.32 compute2
+10.130.39.11 controller1
+10.130.39.12 controller2
+10.130.39.13 controller3
+10.130.39.41 download
+10.130.39.41 myregistry
+10.130.39.41 repository
+

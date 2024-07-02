@@ -1,6 +1,6 @@
 ---
 - name: /etc/hosts create
-  hosts: all
+  hosts: localhost
   become: true
   roles:
     - create-hostsfile    
