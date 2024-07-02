@@ -13,7 +13,7 @@ pip install -U pip
 pip install 'ansible-core>=2.14,<2.16'
 
 # yum 패키지 설치
-dnf install -y gcc git python3-libselinux libffi-devel openssl-devel openssl net-tools traceroute vim unzip iputils sshpass
+dnf install -y gcc git python3-libselinux libffi-devel openssl-devel openssl net-tools traceroute vim unzip iputils sshpass python3-devel 
 
 # ansible collection
 ansible-galaxy collection install containers.podman --force
