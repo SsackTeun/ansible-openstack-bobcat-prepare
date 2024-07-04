@@ -22,7 +22,7 @@ controller2 ansible_host=10.130.39.12
 controller3 ansible_host=10.130.39.13
 
 [repository]
-repository ansible_host=10.130.39.41
+repository ansible_host=192.168.24.7 ansible_port=10975
 
 [registry]
-myregistry ansible_host=10.130.39.41
+myregistry ansible_host=192.168.24.7 ansible_port=10975

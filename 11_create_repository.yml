@@ -1,6 +1,6 @@
 ---
 - name: CREATE REPOSITORY SERVER
-  hosts: download
+  hosts: repository
   become: true
   tasks:
     - name: create_repository

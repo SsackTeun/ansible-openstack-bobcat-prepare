@@ -1,0 +1,920 @@
+[WARNING]: Invalid characters were found in group names but not replaced, use
+-vvvv to see details
+[WARNING]: Found both group and host with same name: repository
+[WARNING]: Found both group and host with same name: chrony-server
+
+PLAY [REPOSYNC] ****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [download]
+
+TASK [add-common-repo : remove_repo] *******************************************
+changed: [download] => (item=centos-release-openstack-bobcat)
+changed: [download] => (item=centos-release-ceph-reef)
+changed: [download] => (item=cephadm)
+changed: [download] => (item=yum-utils)
+changed: [download] => (item=epel-release)
+changed: [download] => (item=ceph-common)
+changed: [download] => (item=centos-release-nfv-openvswitch)
+changed: [download] => (item=centos-release-rabbitmq-38)
+
+TASK [add-common-repo : debug] *************************************************
+ok: [download] => {
+    "remove_repo_result": {
+        "changed": true,
+        "msg": "All items completed",
+        "results": [
+            {
+                "ansible_loop_var": "item",
+                "changed": true,
+                "failed": false,
+                "invocation": {
+                    "module_args": {
+                        "allow_downgrade": false,
+                        "allowerasing": false,
+                        "autoremove": false,
+                        "bugfix": false,
+                        "cacheonly": false,
+                        "conf_file": null,
+                        "disable_excludes": null,
+                        "disable_gpg_check": false,
+                        "disable_plugin": [],
+                        "disablerepo": [],
+                        "download_dir": null,
+                        "download_only": false,
+                        "enable_plugin": [],
+                        "enablerepo": [],
+                        "exclude": [],
+                        "install_repoquery": true,
+                        "install_weak_deps": true,
+                        "installroot": "/",
+                        "list": null,
+                        "lock_timeout": 30,
+                        "name": [
+                            "centos-release-openstack-bobcat"
+                        ],
+                        "nobest": false,
+                        "releasever": null,
+                        "security": false,
+                        "skip_broken": false,
+                        "sslverify": true,
+                        "state": "absent",
+                        "update_cache": false,
+                        "update_only": false,
+                        "use_backend": "auto",
+                        "validate_certs": true
+                    }
+                },
+                "item": "centos-release-openstack-bobcat",
+                "msg": "",
+                "rc": 0,
+                "results": [
+                    "Removed: centos-release-openstack-bobcat-1-1.el9.noarch"
+                ]
+            },
+            {
+                "ansible_loop_var": "item",
+                "changed": true,
+                "failed": false,
+                "invocation": {
+                    "module_args": {
+                        "allow_downgrade": false,
+                        "allowerasing": false,
+                        "autoremove": false,
+                        "bugfix": false,
+                        "cacheonly": false,
+                        "conf_file": null,
+                        "disable_excludes": null,
+                        "disable_gpg_check": false,
+                        "disable_plugin": [],
+                        "disablerepo": [],
+                        "download_dir": null,
+                        "download_only": false,
+                        "enable_plugin": [],
+                        "enablerepo": [],
+                        "exclude": [],
+                        "install_repoquery": true,
+                        "install_weak_deps": true,
+                        "installroot": "/",
+                        "list": null,
+                        "lock_timeout": 30,
+                        "name": [
+                            "centos-release-ceph-reef"
+                        ],
+                        "nobest": false,
+                        "releasever": null,
+                        "security": false,
+                        "skip_broken": false,
+                        "sslverify": true,
+                        "state": "absent",
+                        "update_cache": false,
+                        "update_only": false,
+                        "use_backend": "auto",
+                        "validate_certs": true
+                    }
+                },
+                "item": "centos-release-ceph-reef",
+                "msg": "",
+                "rc": 0,
+                "results": [
+                    "Removed: centos-release-ceph-reef-1.0-1.el9.noarch"
+                ]
+            },
+            {
+                "ansible_loop_var": "item",
+                "changed": true,
+                "failed": false,
+                "invocation": {
+                    "module_args": {
+                        "allow_downgrade": false,
+                        "allowerasing": false,
+                        "autoremove": false,
+                        "bugfix": false,
+                        "cacheonly": false,
+                        "conf_file": null,
+                        "disable_excludes": null,
+                        "disable_gpg_check": false,
+                        "disable_plugin": [],
+                        "disablerepo": [],
+                        "download_dir": null,
+                        "download_only": false,
+                        "enable_plugin": [],
+                        "enablerepo": [],
+                        "exclude": [],
+                        "install_repoquery": true,
+                        "install_weak_deps": true,
+                        "installroot": "/",
+                        "list": null,
+                        "lock_timeout": 30,
+                        "name": [
+                            "cephadm"
+                        ],
+                        "nobest": false,
+                        "releasever": null,
+                        "security": false,
+                        "skip_broken": false,
+                        "sslverify": true,
+                        "state": "absent",
+                        "update_cache": false,
+                        "update_only": false,
+                        "use_backend": "auto",
+                        "validate_certs": true
+                    }
+                },
+                "item": "cephadm",
+                "msg": "",
+                "rc": 0,
+                "results": [
+                    "Removed: cephadm-2:18.2.3-1.el9s.noarch"
+                ]
+            },
+            {
+                "ansible_loop_var": "item",
+                "changed": true,
+                "failed": false,
+                "invocation": {
+                    "module_args": {
+                        "allow_downgrade": false,
+                        "allowerasing": false,
+                        "autoremove": false,
+                        "bugfix": false,
+                        "cacheonly": false,
+                        "conf_file": null,
+                        "disable_excludes": null,
+                        "disable_gpg_check": false,
+                        "disable_plugin": [],
+                        "disablerepo": [],
+                        "download_dir": null,
+                        "download_only": false,
+                        "enable_plugin": [],
+                        "enablerepo": [],
+                        "exclude": [],
+                        "install_repoquery": true,
+                        "install_weak_deps": true,
+                        "installroot": "/",
+                        "list": null,
+                        "lock_timeout": 30,
+                        "name": [
+                            "yum-utils"
+                        ],
+                        "nobest": false,
+                        "releasever": null,
+                        "security": false,
+                        "skip_broken": false,
+                        "sslverify": true,
+                        "state": "absent",
+                        "update_cache": false,
+                        "update_only": false,
+                        "use_backend": "auto",
+                        "validate_certs": true
+                    }
+                },
+                "item": "yum-utils",
+                "msg": "",
+                "rc": 0,
+                "results": [
+                    "Removed: yum-utils-4.3.0-13.el9.noarch"
+                ]
+            },
+            {
+                "ansible_loop_var": "item",
+                "changed": true,
+                "failed": false,
+                "invocation": {
+                    "module_args": {
+                        "allow_downgrade": false,
+                        "allowerasing": false,
+                        "autoremove": false,
+                        "bugfix": false,
+                        "cacheonly": false,
+                        "conf_file": null,
+                        "disable_excludes": null,
+                        "disable_gpg_check": false,
+                        "disable_plugin": [],
+                        "disablerepo": [],
+                        "download_dir": null,
+                        "download_only": false,
+                        "enable_plugin": [],
+                        "enablerepo": [],
+                        "exclude": [],
+                        "install_repoquery": true,
+                        "install_weak_deps": true,
+                        "installroot": "/",
+                        "list": null,
+                        "lock_timeout": 30,
+                        "name": [
+                            "epel-release"
+                        ],
+                        "nobest": false,
+                        "releasever": null,
+                        "security": false,
+                        "skip_broken": false,
+                        "sslverify": true,
+                        "state": "absent",
+                        "update_cache": false,
+                        "update_only": false,
+                        "use_backend": "auto",
+                        "validate_certs": true
+                    }
+                },
+                "item": "epel-release",
+                "msg": "",
+                "rc": 0,
+                "results": [
+                    "Removed: epel-release-9-7.el9.noarch"
+                ]
+            },
+            {
+                "ansible_loop_var": "item",
+                "changed": true,
+                "failed": false,
+                "invocation": {
+                    "module_args": {
+                        "allow_downgrade": false,
+                        "allowerasing": false,
+                        "autoremove": false,
+                        "bugfix": false,
+                        "cacheonly": false,
+                        "conf_file": null,
+                        "disable_excludes": null,
+                        "disable_gpg_check": false,
+                        "disable_plugin": [],
+                        "disablerepo": [],
+                        "download_dir": null,
+                        "download_only": false,
+                        "enable_plugin": [],
+                        "enablerepo": [],
+                        "exclude": [],
+                        "install_repoquery": true,
+                        "install_weak_deps": true,
+                        "installroot": "/",
+                        "list": null,
+                        "lock_timeout": 30,
+                        "name": [
+                            "ceph-common"
+                        ],
+                        "nobest": false,
+                        "releasever": null,
+                        "security": false,
+                        "skip_broken": false,
+                        "sslverify": true,
+                        "state": "absent",
+                        "update_cache": false,
+                        "update_only": false,
+                        "use_backend": "auto",
+                        "validate_certs": true
+                    }
+                },
+                "item": "ceph-common",
+                "msg": "",
+                "rc": 0,
+                "results": [
+                    "Removed: ceph-common-2:18.2.3-1.el9s.x86_64"
+                ]
+            },
+            {
+                "ansible_loop_var": "item",
+                "changed": true,
+                "failed": false,
+                "invocation": {
+                    "module_args": {
+                        "allow_downgrade": false,
+                        "allowerasing": false,
+                        "autoremove": false,
+                        "bugfix": false,
+                        "cacheonly": false,
+                        "conf_file": null,
+                        "disable_excludes": null,
+                        "disable_gpg_check": false,
+                        "disable_plugin": [],
+                        "disablerepo": [],
+                        "download_dir": null,
+                        "download_only": false,
+                        "enable_plugin": [],
+                        "enablerepo": [],
+                        "exclude": [],
+                        "install_repoquery": true,
+                        "install_weak_deps": true,
+                        "installroot": "/",
+                        "list": null,
+                        "lock_timeout": 30,
+                        "name": [
+                            "centos-release-nfv-openvswitch"
+                        ],
+                        "nobest": false,
+                        "releasever": null,
+                        "security": false,
+                        "skip_broken": false,
+                        "sslverify": true,
+                        "state": "absent",
+                        "update_cache": false,
+                        "update_only": false,
+                        "use_backend": "auto",
+                        "validate_certs": true
+                    }
+                },
+                "item": "centos-release-nfv-openvswitch",
+                "msg": "",
+                "rc": 0,
+                "results": [
+                    "Removed: centos-release-nfv-openvswitch-1-6.el9.noarch"
+                ]
+            },
+            {
+                "ansible_loop_var": "item",
+                "changed": true,
+                "failed": false,
+                "invocation": {
+                    "module_args": {
+                        "allow_downgrade": false,
+                        "allowerasing": false,
+                        "autoremove": false,
+                        "bugfix": false,
+                        "cacheonly": false,
+                        "conf_file": null,
+                        "disable_excludes": null,
+                        "disable_gpg_check": false,
+                        "disable_plugin": [],
+                        "disablerepo": [],
+                        "download_dir": null,
+                        "download_only": false,
+                        "enable_plugin": [],
+                        "enablerepo": [],
+                        "exclude": [],
+                        "install_repoquery": true,
+                        "install_weak_deps": true,
+                        "installroot": "/",
+                        "list": null,
+                        "lock_timeout": 30,
+                        "name": [
+                            "centos-release-rabbitmq-38"
+                        ],
+                        "nobest": false,
+                        "releasever": null,
+                        "security": false,
+                        "skip_broken": false,
+                        "sslverify": true,
+                        "state": "absent",
+                        "update_cache": false,
+                        "update_only": false,
+                        "use_backend": "auto",
+                        "validate_certs": true
+                    }
+                },
+                "item": "centos-release-rabbitmq-38",
+                "msg": "",
+                "rc": 0,
+                "results": [
+                    "Removed: centos-release-rabbitmq-38-1-4.el9.noarch"
+                ]
+            }
+        ],
+        "skipped": false
+    }
+}
+
+TASK [add-common-repo : add-repo] **********************************************
+changed: [download] => (item=centos-release-openstack-bobcat)
+ok: [download] => (item=centos-release-ceph-reef)
+changed: [download] => (item=cephadm)
+changed: [download] => (item=yum-utils)
+changed: [download] => (item=epel-release)
+changed: [download] => (item=ceph-common)
+ok: [download] => (item=centos-release-nfv-openvswitch)
+ok: [download] => (item=centos-release-rabbitmq-38)
+
+TASK [add-common-repo : debug] *************************************************
+ok: [download] => {
+    "add_repo_result": {
+        "changed": true,
+        "msg": "All items completed",
+        "results": [
+            {
+                "ansible_loop_var": "item",
+                "changed": true,
+                "failed": false,
+                "invocation": {
+                    "module_args": {
+                        "allow_downgrade": false,
+                        "allowerasing": false,
+                        "autoremove": false,
+                        "bugfix": false,
+                        "cacheonly": false,
+                        "conf_file": null,
+                        "disable_excludes": null,
+                        "disable_gpg_check": false,
+                        "disable_plugin": [],
+                        "disablerepo": [],
+                        "download_dir": null,
+                        "download_only": false,
+                        "enable_plugin": [],
+                        "enablerepo": [],
+                        "exclude": [],
+                        "install_repoquery": true,
+                        "install_weak_deps": true,
+                        "installroot": "/",
+                        "list": null,
+                        "lock_timeout": 30,
+                        "name": [
+                            "centos-release-openstack-bobcat"
+                        ],
+                        "nobest": false,
+                        "releasever": null,
+                        "security": false,
+                        "skip_broken": false,
+                        "sslverify": true,
+                        "state": "present",
+                        "update_cache": false,
+                        "update_only": false,
+                        "use_backend": "auto",
+                        "validate_certs": true
+                    }
+                },
+                "item": "centos-release-openstack-bobcat",
+                "msg": "",
+                "rc": 0,
+                "results": [
+                    "Installed: centos-release-rabbitmq-38-1-4.el9.noarch",
+                    "Installed: centos-release-nfv-openvswitch-1-6.el9.noarch",
+                    "Installed: centos-release-openstack-bobcat-1-1.el9.noarch",
+                    "Installed: centos-release-ceph-reef-1.0-1.el9.noarch"
+                ]
+            },
+            {
+                "ansible_loop_var": "item",
+                "changed": false,
+                "failed": false,
+                "invocation": {
+                    "module_args": {
+                        "allow_downgrade": false,
+                        "allowerasing": false,
+                        "autoremove": false,
+                        "bugfix": false,
+                        "cacheonly": false,
+                        "conf_file": null,
+                        "disable_excludes": null,
+                        "disable_gpg_check": false,
+                        "disable_plugin": [],
+                        "disablerepo": [],
+                        "download_dir": null,
+                        "download_only": false,
+                        "enable_plugin": [],
+                        "enablerepo": [],
+                        "exclude": [],
+                        "install_repoquery": true,
+                        "install_weak_deps": true,
+                        "installroot": "/",
+                        "list": null,
+                        "lock_timeout": 30,
+                        "name": [
+                            "centos-release-ceph-reef"
+                        ],
+                        "nobest": false,
+                        "releasever": null,
+                        "security": false,
+                        "skip_broken": false,
+                        "sslverify": true,
+                        "state": "present",
+                        "update_cache": false,
+                        "update_only": false,
+                        "use_backend": "auto",
+                        "validate_certs": true
+                    }
+                },
+                "item": "centos-release-ceph-reef",
+                "msg": "Nothing to do",
+                "rc": 0,
+                "results": []
+            },
+            {
+                "ansible_loop_var": "item",
+                "changed": true,
+                "failed": false,
+                "invocation": {
+                    "module_args": {
+                        "allow_downgrade": false,
+                        "allowerasing": false,
+                        "autoremove": false,
+                        "bugfix": false,
+                        "cacheonly": false,
+                        "conf_file": null,
+                        "disable_excludes": null,
+                        "disable_gpg_check": false,
+                        "disable_plugin": [],
+                        "disablerepo": [],
+                        "download_dir": null,
+                        "download_only": false,
+                        "enable_plugin": [],
+                        "enablerepo": [],
+                        "exclude": [],
+                        "install_repoquery": true,
+                        "install_weak_deps": true,
+                        "installroot": "/",
+                        "list": null,
+                        "lock_timeout": 30,
+                        "name": [
+                            "cephadm"
+                        ],
+                        "nobest": false,
+                        "releasever": null,
+                        "security": false,
+                        "skip_broken": false,
+                        "sslverify": true,
+                        "state": "present",
+                        "update_cache": false,
+                        "update_only": false,
+                        "use_backend": "auto",
+                        "validate_certs": true
+                    }
+                },
+                "item": "cephadm",
+                "msg": "",
+                "rc": 0,
+                "results": [
+                    "Installed: cephadm-2:18.2.3-1.el9s.noarch"
+                ]
+            },
+            {
+                "ansible_loop_var": "item",
+                "changed": true,
+                "failed": false,
+                "invocation": {
+                    "module_args": {
+                        "allow_downgrade": false,
+                        "allowerasing": false,
+                        "autoremove": false,
+                        "bugfix": false,
+                        "cacheonly": false,
+                        "conf_file": null,
+                        "disable_excludes": null,
+                        "disable_gpg_check": false,
+                        "disable_plugin": [],
+                        "disablerepo": [],
+                        "download_dir": null,
+                        "download_only": false,
+                        "enable_plugin": [],
+                        "enablerepo": [],
+                        "exclude": [],
+                        "install_repoquery": true,
+                        "install_weak_deps": true,
+                        "installroot": "/",
+                        "list": null,
+                        "lock_timeout": 30,
+                        "name": [
+                            "yum-utils"
+                        ],
+                        "nobest": false,
+                        "releasever": null,
+                        "security": false,
+                        "skip_broken": false,
+                        "sslverify": true,
+                        "state": "present",
+                        "update_cache": false,
+                        "update_only": false,
+                        "use_backend": "auto",
+                        "validate_certs": true
+                    }
+                },
+                "item": "yum-utils",
+                "msg": "",
+                "rc": 0,
+                "results": [
+                    "Installed: yum-utils-4.3.0-13.el9.noarch"
+                ]
+            },
+            {
+                "ansible_loop_var": "item",
+                "changed": true,
+                "failed": false,
+                "invocation": {
+                    "module_args": {
+                        "allow_downgrade": false,
+                        "allowerasing": false,
+                        "autoremove": false,
+                        "bugfix": false,
+                        "cacheonly": false,
+                        "conf_file": null,
+                        "disable_excludes": null,
+                        "disable_gpg_check": false,
+                        "disable_plugin": [],
+                        "disablerepo": [],
+                        "download_dir": null,
+                        "download_only": false,
+                        "enable_plugin": [],
+                        "enablerepo": [],
+                        "exclude": [],
+                        "install_repoquery": true,
+                        "install_weak_deps": true,
+                        "installroot": "/",
+                        "list": null,
+                        "lock_timeout": 30,
+                        "name": [
+                            "epel-release"
+                        ],
+                        "nobest": false,
+                        "releasever": null,
+                        "security": false,
+                        "skip_broken": false,
+                        "sslverify": true,
+                        "state": "present",
+                        "update_cache": false,
+                        "update_only": false,
+                        "use_backend": "auto",
+                        "validate_certs": true
+                    }
+                },
+                "item": "epel-release",
+                "msg": "",
+                "rc": 0,
+                "results": [
+                    "Installed: epel-release-9-7.el9.noarch"
+                ]
+            },
+            {
+                "ansible_loop_var": "item",
+                "changed": true,
+                "failed": false,
+                "invocation": {
+                    "module_args": {
+                        "allow_downgrade": false,
+                        "allowerasing": false,
+                        "autoremove": false,
+                        "bugfix": false,
+                        "cacheonly": false,
+                        "conf_file": null,
+                        "disable_excludes": null,
+                        "disable_gpg_check": false,
+                        "disable_plugin": [],
+                        "disablerepo": [],
+                        "download_dir": null,
+                        "download_only": false,
+                        "enable_plugin": [],
+                        "enablerepo": [],
+                        "exclude": [],
+                        "install_repoquery": true,
+                        "install_weak_deps": true,
+                        "installroot": "/",
+                        "list": null,
+                        "lock_timeout": 30,
+                        "name": [
+                            "ceph-common"
+                        ],
+                        "nobest": false,
+                        "releasever": null,
+                        "security": false,
+                        "skip_broken": false,
+                        "sslverify": true,
+                        "state": "present",
+                        "update_cache": false,
+                        "update_only": false,
+                        "use_backend": "auto",
+                        "validate_certs": true
+                    }
+                },
+                "item": "ceph-common",
+                "msg": "",
+                "rc": 0,
+                "results": [
+                    "Installed: ceph-common-2:18.2.3-1.el9s.x86_64"
+                ]
+            },
+            {
+                "ansible_loop_var": "item",
+                "changed": false,
+                "failed": false,
+                "invocation": {
+                    "module_args": {
+                        "allow_downgrade": false,
+                        "allowerasing": false,
+                        "autoremove": false,
+                        "bugfix": false,
+                        "cacheonly": false,
+                        "conf_file": null,
+                        "disable_excludes": null,
+                        "disable_gpg_check": false,
+                        "disable_plugin": [],
+                        "disablerepo": [],
+                        "download_dir": null,
+                        "download_only": false,
+                        "enable_plugin": [],
+                        "enablerepo": [],
+                        "exclude": [],
+                        "install_repoquery": true,
+                        "install_weak_deps": true,
+                        "installroot": "/",
+                        "list": null,
+                        "lock_timeout": 30,
+                        "name": [
+                            "centos-release-nfv-openvswitch"
+                        ],
+                        "nobest": false,
+                        "releasever": null,
+                        "security": false,
+                        "skip_broken": false,
+                        "sslverify": true,
+                        "state": "present",
+                        "update_cache": false,
+                        "update_only": false,
+                        "use_backend": "auto",
+                        "validate_certs": true
+                    }
+                },
+                "item": "centos-release-nfv-openvswitch",
+                "msg": "Nothing to do",
+                "rc": 0,
+                "results": []
+            },
+            {
+                "ansible_loop_var": "item",
+                "changed": false,
+                "failed": false,
+                "invocation": {
+                    "module_args": {
+                        "allow_downgrade": false,
+                        "allowerasing": false,
+                        "autoremove": false,
+                        "bugfix": false,
+                        "cacheonly": false,
+                        "conf_file": null,
+                        "disable_excludes": null,
+                        "disable_gpg_check": false,
+                        "disable_plugin": [],
+                        "disablerepo": [],
+                        "download_dir": null,
+                        "download_only": false,
+                        "enable_plugin": [],
+                        "enablerepo": [],
+                        "exclude": [],
+                        "install_repoquery": true,
+                        "install_weak_deps": true,
+                        "installroot": "/",
+                        "list": null,
+                        "lock_timeout": 30,
+                        "name": [
+                            "centos-release-rabbitmq-38"
+                        ],
+                        "nobest": false,
+                        "releasever": null,
+                        "security": false,
+                        "skip_broken": false,
+                        "sslverify": true,
+                        "state": "present",
+                        "update_cache": false,
+                        "update_only": false,
+                        "use_backend": "auto",
+                        "validate_certs": true
+                    }
+                },
+                "item": "centos-release-rabbitmq-38",
+                "msg": "Nothing to do",
+                "rc": 0,
+                "results": []
+            }
+        ],
+        "skipped": false
+    }
+}
+
+TASK [add-cephadm-repo : Add Ceph-source / Ceph-noarch] ************************
+changed: [download]
+
+TASK [add-cephadm-repo : debug] ************************************************
+ok: [download] => {
+    "result": {
+        "changed": true,
+        "cmd": [
+            "cephadm",
+            "add-repo",
+            "--release",
+            "reef"
+        ],
+        "delta": "0:00:05.672838",
+        "end": "2024-07-04 14:33:22.851671",
+        "failed": false,
+        "msg": "",
+        "rc": 0,
+        "start": "2024-07-04 14:33:17.178833",
+        "stderr": "Writing repo to /etc/yum.repos.d/ceph.repo...\nEnabling EPEL...\nCompleted adding repo.",
+        "stderr_lines": [
+            "Writing repo to /etc/yum.repos.d/ceph.repo...",
+            "Enabling EPEL...",
+            "Completed adding repo."
+        ],
+        "stdout": "",
+        "stdout_lines": []
+    }
+}
+
+TASK [reposync : dnf repolist] *************************************************
+included: /openstack-ansible/roles/reposync/tasks/dnf_repolist.yml for download
+
+TASK [reposync : Get repository list this system] ******************************
+changed: [download]
+
+TASK [reposync : ansible.builtin.shell] ****************************************
+[WARNING]: Invalid characters were found in group names but not replaced, use
+-vvvv to see details
+[WARNING]: Found both group and host with same name: repository
+[WARNING]: Found both group and host with same name: chrony-server
+
+PLAY [CREATE REPOSITORY SERVER] ************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [myregistry]
+
+TASK [create_registry] *********************************************************
+
+TASK [create-registry : find image files (.tar file)] **************************
+ok: [myregistry]
+
+TASK [create-registry : debug] *************************************************
+ok: [myregistry] => {
+    "msg": {
+        "changed": false,
+        "examined": 192,
+        "failed": false,
+        "files": [
+            {
+                "atime": 1720071959.0723825,
+                "ctime": 1720055306.532194,
+                "dev": 64768,
+                "gid": 0,
+                "gr_name": "root",
+                "inode": 4333314,
+                "isblk": false,
+                "ischr": false,
+                "isdir": false,
+                "isfifo": false,
+                "isgid": false,
+                "islnk": false,
+                "isreg": true,
+                "issock": false,
+                "isuid": false,
+                "mode": "0644",
+                "mtime": 1720055306.532194,
+                "nlink": 1,
+                "path": "/openstack-files/registry/docker.io_library_registry_2.8.3.tar",
+                "pw_name": "root",
+                "rgrp": true,
+                "roth": true,
+                "rusr": true,
+                "size": 26006528,
+                "uid": 0,
+                "wgrp": false,
+                "woth": false,
+                "wusr": true,
+                "xgrp": false,
+                "xoth": false,
+                "xusr": false
+            }
+        ],
+        "matched": 1,
+        "msg": "All paths examined",
+        "skipped_paths": {}
+    }
+}
+
+TASK [create-registry : /openstack/registry/ 이미지 import] ********************
+changed: [myregistry] => (item=/openstack-files/registry/docker.io_library_registry_2.8.3.tar)
+
+TASK [create-registry : htpasswd 명령을 위한 httpd-tools 설치] *****************

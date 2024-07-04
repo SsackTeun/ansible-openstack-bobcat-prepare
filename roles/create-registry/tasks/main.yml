@@ -1,8 +1,5 @@
 ---
 # tasks file for roles/create_registry
-- name: ensure_host.yml
-  ansible.builtin.import_tasks: ensure_host.yml
-
 - name: Apply Task load registry server image
   ansible.builtin.import_tasks: load_registry_image.yml 
 
