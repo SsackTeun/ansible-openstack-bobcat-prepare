@@ -16,7 +16,10 @@ pip install -r requirements.txt
 pip install 'ansible-core>=2.14,<2.16'
 
 # 6. 앤서블 컨테이너 모듈 강제 설치 (모듈이 설치가 되어 있음에도, 없다고 에러날 때가 있어 넣어둠)
-ansible-galaxy collection install containers.podman --force
+ansible-galaxy collection install containers.podman  --force
+
+# 6-1. Requirements ansible-module
+ansible-galaxy collection install community.general:9.1.0
 
 # 7. vim 테마 설치(선택)
 git clone https://github.com/tomasr/molokai.git ./molokai

@@ -124,8 +124,8 @@ kolla_services:
 # service-images-pull
 # ############
 etc_images:
-  - nginx:1.25.5
-  - registry:2.8.3
+  - docker.io/library/nginx:1.25.5
+  - docker.io/registry:2.8.3
   - quay.io/ceph/ceph:v18
   - quay.io/ceph/ceph-grafana:9.4.7
   - quay.io/prometheus/prometheus:v2.43.0
