@@ -124,6 +124,7 @@ kolla_services:
 # service-images-pull
 # ############
 etc_images:
+  - docker.io/sonatype/nexus3:latest
   - docker.io/library/nginx:1.25.5
   - docker.io/registry:2.8.3
   - quay.io/ceph/ceph:v18

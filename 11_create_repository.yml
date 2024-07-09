@@ -5,7 +5,7 @@
   tasks:
     - name: create_repository
       include_role:
-        name: create_repository
+        name: create-repository
       vars:
         repository_file_path: "{{ localrepo_file }}"
     
