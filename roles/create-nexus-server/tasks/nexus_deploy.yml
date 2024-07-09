@@ -1,0 +1,28 @@
+- name: create_dir
+  file:
+    path: "{{ nexus_data_path }}" 
+    state: directory
+    mode: "0757"
+
+- name: create_dir
+  file:
+    path: "{{ nexus_sonatype_work }}" 
+    state: directory
+    mode: "0757"
+
+- name: nexus run
+  containers.podman.podman_container:
+    name: pip-repository
+    image: "docker.io/sonatype/nexus3"
+    state: started
+    recreate: true
+    ports:
+      - "{{ nexus_port }}" # 80:80
+    hostname: "{{ nexus_hostname }}"
+    volumes:
+      - "{{ nexus_data_path }}:/nexus-data:Z"
+      - "{{ nexus_sonatype_work }}:/sonatype-work:Z"
+    restart_policy: unless-stopped
+    interactive: false # option -i
+    tty: false # option -t
+

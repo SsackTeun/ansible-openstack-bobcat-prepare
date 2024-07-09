@@ -1,13 +1,13 @@
 ---
 # tasks file for roles/create_registry
-#- name: Apply Task load registry server image
-#  ansible.builtin.import_tasks: load_registry_image.yml 
-#
-#- name: create_server.yml
-#  ansible.builtin.import_tasks: create_server.yml
-#
-#- name: load_image.yml
-#  ansible.builtin.import_tasks: load_image.yml
+- name: Apply Task load registry server image
+  ansible.builtin.import_tasks: load_registry_image.yml 
+
+- name: create_server.yml
+  ansible.builtin.import_tasks: create_server.yml
+
+- name: load_image.yml
+  ansible.builtin.import_tasks: load_image.yml
 
 - name: push_image.yml
   ansible.builtin.import_tasks: push_image.yml

@@ -2,10 +2,6 @@
 - name: CREATE REPOSITORY SERVER
   hosts: registry
   become: true
-  tasks:
-    - name: create_registry
-      include_role:
-        name: create-registry
-      vars:
-        registry_file_path: "{{ registry_image_path }}"    
-
+  roles:
+    - podman-login
+    - create-nexus-server

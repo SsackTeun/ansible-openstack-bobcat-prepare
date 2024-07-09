@@ -1,2 +1,7 @@
 ---
-# tasks file for roles/create-nexus-server
+# tasks file for roles/create_repository
+- name: image load
+  import_tasks: load_images.yml 
+
+- name: nexus deply
+  import_tasks: nexus_deploy.yml 

@@ -1,0 +1,8 @@
+---
+# tasks file for roles/podman-login
+- name: Login Private Registry
+  containers.podman.podman_login:
+    username: "{{ private_registry_username }}"
+    password: "{{ private_registry_password }}"
+    registry: "{{ private_registry_url }}"
+    tlsverify: false
