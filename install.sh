@@ -19,6 +19,7 @@ pip install 'ansible-core>=2.14,<2.16'
 ansible-galaxy collection install containers.podman  --force
 
 # 6-1. Requirements ansible-module
+ansible-galaxy collection install -r requirements-collection.yml
 ansible-galaxy collection install community.general:9.1.0
 
 # 7. vim 테마 설치(선택)

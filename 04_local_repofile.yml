@@ -3,5 +3,5 @@
   hosts: download
   become: true
   roles:
-    # - get-repolist-detail
+    - get-repolist-detail
     - create-local-repofile    
