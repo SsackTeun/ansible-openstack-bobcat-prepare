@@ -1,11 +1,12 @@
 # EXTERNAL
 [download_target]
-#download ansible_host=10.130.39.41
-download ansible_host=192.168.24.7 ansible_port=10975
+download ansible_host=10.130.39.41
+#download ansible_host=192.168.24.7 ansible_port=10975
 
 # INTERNAL
 [chrony-server]
-chrony-server ansible_host=192.168.24.7 ansible_port=10975
+chrony-server ansible_host=10.130.39.41
+#chrony-server ansible_host=192.168.24.7 ansible_port=10975
 
 [ceph]
 ceph-1 ansible_host=10.130.39.21
@@ -22,7 +23,9 @@ controller2 ansible_host=10.130.39.12
 controller3 ansible_host=10.130.39.13
 
 [repository]
-repository ansible_host=192.168.24.7 ansible_port=10975
+repository ansible_host=10.130.39.41
+#repository ansible_host=192.168.24.7 ansible_port=10975
 
 [registry]
-myregistry ansible_host=192.168.24.7 ansible_port=10975
+myregistry ansible_host=10.130.39.41
+#myregistry ansible_host=192.168.24.7 ansible_port=10975
