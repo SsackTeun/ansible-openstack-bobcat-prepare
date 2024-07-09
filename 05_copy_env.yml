@@ -1,6 +1,13 @@
 ---
 - name: /etc/hosts create
-  hosts: all
+  hosts: download
   become: true
   roles:
-    - create-hostsfile    
+    - create-hostsfile 
+
+- name: copy yum.repos.d file
+  hosts: copy-repofile-target 
+  become: true
+  serial: 1
+  roles:
+    - copy-repofiles

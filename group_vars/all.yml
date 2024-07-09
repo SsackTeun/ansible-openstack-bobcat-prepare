@@ -143,6 +143,7 @@ current_directory: "{{ lookup('pipe', 'pwd') }}"
 local_root_path:  "/{{ current_directory.split('/') | select('match', '[^ ]') | first }}"
 venv_path: "{{ local_root_path }}/venv"
 copy_kolla_config: "{{ venv_path }}/share/kolla-ansible/etc_examples/kolla"
+copy_inventory_path: "{{ venv_path }}/share/kolla-ansible/ansible/inventory/multinode"
 dest_root: "{{ local_root_path }}/git"
 gits:
   - git_repo: "https://opendev.org/openstack/kolla.git"

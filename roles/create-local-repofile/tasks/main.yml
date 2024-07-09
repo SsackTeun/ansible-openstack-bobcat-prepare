@@ -23,6 +23,5 @@
   copy:
     content: "{{ repofile_result.stdout_lines |  join('\n') }}"
     dest: "{{ role_path }}/files/local.repo"
-  delegate_to: localhost
 
 

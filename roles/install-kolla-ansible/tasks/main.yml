@@ -22,5 +22,13 @@
 - name: password.yml, global.yml -> /etc/kolla 복사
   ansible.builtin.shell: cp -r "{{ copy_kolla_config }}" /etc/.
 
+- name: cp inventory file
+  ansible.builtin.copy:
+    src: "{{ copy_inventory_path }}"
+    dest: "{{ lookup('env','PWD') }}"
+    owner: root
+    group: root
+    mode: '0644'
+
 - name: /etc/kolla password.yml 에 패스워드 생성
   ansible.builtin.shell: kolla-genpwd
