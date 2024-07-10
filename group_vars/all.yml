@@ -81,6 +81,12 @@ kolla_services:
   - designate
   - etcd
   - fluentd
+  - cron
+  - kolla-toolbox
+  - keepalived
+  - haproxy
+  - openvswitch-db-server
+  - openvswitch-vswitchd
   - glance
   - gnocchi
   - grafana
