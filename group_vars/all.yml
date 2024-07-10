@@ -175,6 +175,15 @@ nexus_port: "8081:8081" # 80:80
 nexus_hostname: "root"
 nexus_data_path: "{{ root_path }}/nexus-data"
 nexus_sonatype_work: "{{ root_path }}/sonatype-work"
+
+#Nexus User Account
+nexus_user_id: admin
+nexus_user_password: P@ssw0rd
+nexus_user_status: active
+nexus_user_email: changeme@yourcompany.com
+# Doesn't Needed Change
+nexus_user_firstname: Administrator
+nexus_user_lastname: User
 ##=============== CEPH_INSTALL ============================##
 chrony_server_host: "{{ groups['chrony-server'] | first }}"
 chrony_server_cidr: "192.168.24.0/24"
