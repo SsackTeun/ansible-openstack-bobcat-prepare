@@ -1,0 +1,8 @@
+---
+- name: repofile create
+  hosts: copy-repofile-target
+  become: true
+  roles:
+    - create-pip-config
+
+

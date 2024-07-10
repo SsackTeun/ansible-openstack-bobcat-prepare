@@ -11,3 +11,15 @@
   serial: 1
   roles:
     - copy-repofiles
+
+- name: copy chrony
+  hosts: chrony-client
+  become: true
+  roles:
+    - copy-chrony-conf
+  
+- name: copy podman-auth
+  hosts: copy-repofile-target
+  become: true
+  roles:
+    - create-podman-auth-json

@@ -8,6 +8,11 @@ download ansible_host=10.130.39.41
 chrony-server ansible_host=10.130.39.41
 #chrony-server ansible_host=192.168.24.7 ansible_port=10975
 
+[chrony-client:children]
+ceph
+compute
+controller
+
 [ceph]
 ceph-1 ansible_host=10.130.39.21
 ceph-2 ansible_host=10.130.39.22
