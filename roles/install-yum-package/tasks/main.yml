@@ -1,0 +1,19 @@
+---
+# tasks file for add-repo
+- name: Remove Packages
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: absent
+  loop: "{{ packages }}"
+  register: packages_output
+
+- name: Install Packages
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ packages }}"
+  register: packages_output
+
+- name: Debug Result
+  debug:
+    var: packages_output.results | json_query('[].invocation.module_args.name[0]')

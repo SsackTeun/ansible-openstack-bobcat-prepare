@@ -39,8 +39,9 @@ root_path: /openstack-files
 reposync_path: "{{ root_path }}/repository"
 
 ##############
-## add-common-repo
+## install-yum-package
 ##############
+# yum install package
 packages:
   - centos-release-openstack-bobcat
   - centos-release-ceph-reef
@@ -51,8 +52,9 @@ packages:
   - centos-release-nfv-openvswitch
   - centos-release-rabbitmq-38
 ##############
-## add-cephadm-repo
+## install-cephadm-package
 ##############
+# cephadm add-repo --release {{ ceph_version }}
 ceph_version: reef
 
 ##############

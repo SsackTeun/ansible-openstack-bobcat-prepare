@@ -1,8 +1,3 @@
-# EXTERNAL
-[download_target]
-download ansible_host=10.130.39.41
-#download ansible_host=192.168.24.7 ansible_port=10975
-
 # INTERNAL
 [chrony-server]
 chrony-server ansible_host=10.130.39.41

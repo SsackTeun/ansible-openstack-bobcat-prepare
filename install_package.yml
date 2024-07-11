@@ -1,0 +1,6 @@
+# Install Package
+- name: Install Package
+  hosts: download
+  roles:
+    - install-yum-package
+    - install-cephadm-package
