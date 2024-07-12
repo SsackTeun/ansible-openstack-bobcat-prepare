@@ -1,6 +1,6 @@
 # INTERNAL
 [chrony-server]
-chrony-server ansible_host=10.130.39.41
+chrony-server ansible_host=10.130.39.42
 #chrony-server ansible_host=192.168.24.7 ansible_port=10975
 
 [chrony-client:children]
@@ -23,11 +23,11 @@ controller2 ansible_host=10.130.39.12
 controller3 ansible_host=10.130.39.13
 
 [repository]
-repository ansible_host=10.130.39.41
+repository ansible_host=10.130.39.42
 #repository ansible_host=192.168.24.7 ansible_port=10975
 
 [registry]
-myregistry ansible_host=10.130.39.41
+myregistry ansible_host=10.130.39.42
 #myregistry ansible_host=192.168.24.7 ansible_port=10975
 
 [copy-repofile-target:children]

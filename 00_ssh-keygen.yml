@@ -1,0 +1,12 @@
+---
+- name: keygen
+  hosts: all
+  tasks:
+    - name: ssh-keygen
+      shell: | 
+        ssh-keygen -t rsa -b 4096 -f "/root/.ssh/id_rsa" -N ""
+    
+    - name: Copy SSH public key to authorized_keys
+      authorized_key:
+        user: "{{ ansible_user }}"  # 호스트의 사용자 이름
+        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"

@@ -65,6 +65,11 @@ localrepo_filename: local
 localrepo_file: "{{ reposync_path }}"
 
 ##====================== REGISTRY =====================##
+external_registry_url: "https://hub.docker.com/v2/repositories"
+external_registry_namespace: "kolla"
+external_request_url: "{{ external_registry_url }}/{{ external_registry_namespace }}"
+external_image_prefix: "docker.io/{{ external_registry_namespace }}"
+specific_tag: "2023.2-rocky-9"
 ##############
 ## find_images_with_tag 
 ##############

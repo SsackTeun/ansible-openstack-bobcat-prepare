@@ -1,0 +1,3 @@
+{% for name in all_names %}
+{{ external_image_prefix }}/{{ name }}{% if not loop.last %}{{ "\n" }}{% endif %}
+{% endfor %}

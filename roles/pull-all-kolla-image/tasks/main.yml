@@ -1,0 +1,83 @@
+---
+# tasks file for roles/pull-all-kolla-image
+- name: 페이지 갯수 계산
+  ansible.builtin.uri:
+    url: "{{ external_request_url }}/?ordering=last_updated&page=1&page_size=100"
+    method: GET
+    return_content: yes
+  register: results
+  delegate_to: localhost
+
+- debug:
+    var: ( results.json.count // 100 ) + 1
+
+- name: 1페이지 부터 계산된 페이지까지 목록 가져오기
+  ansible.builtin.uri:
+    url: "{{ external_request_url }}/?ordering=last_updated&page={{ item }}&page_size=100"
+    method: GET
+    return_content: yes
+  loop: "{{ range(1, (results.json.count // 100) + 2) | list }}"
+  #loop: "{{ range(1, 2) | list }}"
+  register: page_results
+  delegate_to: localhost
+
+- name: debug
+  debug:
+    var: page_results
+
+- name: 목록 추출
+  set_fact:
+    all_names: "{{ all_names | default([]) + (page_results.results | map(attribute='json.results') | flatten | map(attribute='name') | list) }}"
+
+- name: 각 목록의 이름을 파일에 저장합니다
+  ansible.builtin.template:
+    src: extract_name.j2
+    dest: "{{ role_path }}/files/registry.list"
+  delegate_to: localhost
+
+- name: 서칭 목록 읽기
+  set_fact:
+    image_list: "{{ lookup('file', role_path + '/files/registry.list').splitlines() }}"
+
+- name: image:{{ specific_tag }} 찾기
+  shell: |
+    podman search --list-tags {{ item }} | grep {{ specific_tag }}
+  loop: "{{ image_list }}"
+  register: image_tag_list
+
+- name: debug
+  debug:
+    var: image_tag_list
+
+- name: Transform the stdout_lines result
+  set_fact:
+    transformed_lines: >-
+          {{
+            image_tag_list.results
+            | selectattr('stdout', 'defined')
+            | selectattr('stdout', '!=', None)
+            | map(attribute='stdout')
+            | map('regex_replace', '\s+', ':')
+            | list
+          }}
+
+- name: Display the transformed result
+  debug:
+    var: transformed_lines
+
+- name: Create a file with the list content
+  copy:
+    content: |
+      {% for item in transformed_lines %}
+      {{ item }}
+      {% endfor %}
+    dest: "{{ role_path }}/files/registry.list"
+    force: yes
+  delegate_to: localhost
+  ignore_errors: yes
+
+- name: Pull each Docker image using containers.podman
+  containers.podman.podman_image:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ transformed_lines }}"
