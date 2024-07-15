@@ -1,3 +1,0 @@
-docker.io/kolla/base:2023.2-rocky-9
-docker.io/kolla/letsencrypt-base:2023.2-rocky-9
-docker.io/kolla/openvswitch-base:2023.2-rocky-9

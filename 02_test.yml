@@ -23,6 +23,7 @@
     - name: Pull-Kolla-Image
       include_role:
         name:  pull-all-kolla-image
+      ignore_errors: true
 
     - name:
       ansible.builtin.include_role:

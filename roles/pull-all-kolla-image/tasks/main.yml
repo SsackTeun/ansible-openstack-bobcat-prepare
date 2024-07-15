@@ -17,7 +17,7 @@
     method: GET
     return_content: yes
   loop: "{{ range(1, (results.json.count // 100) + 2) | list }}"
-  #loop: "{{ range(1, 2) | list }}"
+  #loop: "{{ range(1, 3) | list }}"
   register: page_results
   delegate_to: localhost
 
@@ -44,10 +44,12 @@
     podman search --list-tags {{ item }} | grep {{ specific_tag }}
   loop: "{{ image_list }}"
   register: image_tag_list
+  ignore_errors: yes
 
 - name: debug
   debug:
     var: image_tag_list
+  ignore_errors: yes
 
 - name: Transform the stdout_lines result
   set_fact:
@@ -64,6 +66,7 @@
 - name: Display the transformed result
   debug:
     var: transformed_lines
+  ignore_errors: yes
 
 - name: Create a file with the list content
   copy:
