@@ -6,5 +6,6 @@
 
 ### 01_reposync.yml
 * Function : repo를 생성 후, reposync 로 다운받음
-* Usage : `ansible-playbook 01_reposync.yml`
-* required : `group_vars/repository.yml` 을 수정
+* Usage : 
+* 1. `ansible-playbook 01_reposync.yml`
+* 2. `group_vars/repository.yml` 을 수정하면, /etc/yum.repos.d/ 에 생성되는 저장소를 추가하거나 제거할 수 있음
