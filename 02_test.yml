@@ -1,7 +1,6 @@
-- name: PULL & SAVE ALL IMAGE of KOLLA
-  hosts: download
+- name: Image Pull & Save
+  hosts: registry
   tasks:
-      
     # (NGINX, REGISTRY, CEPH..)
     - name: Apply Role service-image-pull
       include_role:
