@@ -1,8 +1,7 @@
 ---
 - name: REPOSYNC 
-  hosts: download
+  hosts: repository
   become: true
   roles:
-    - install-yum-package
-    - install-cephadm-package
+    - add-repository
     - reposync

@@ -1,0 +1,81 @@
+# DIRECTORY SETTING
+repository_root_path: "/openstack-files/repository"
+
+# REPOSITORY
+repositories:
+  - name: baseos
+    description: Rocky Linux $releasever - BaseOS
+    mirrorlist: https://mirrors.rockylinux.org/mirrorlist?arch=$basearch&repo=BaseOS-$releasever$rltype
+    file: external-lan-repo
+    gpgcheck: false
+    enabled: true
+
+  - name: appstream
+    description: Rocky Linux $releasever - AppStream
+    mirrorlist: https://mirrors.rockylinux.org/mirrorlist?arch=$basearch&repo=AppStream-$releasever$rltype
+    file: external-lan-repo
+    gpgcheck: false
+    enabled: true
+
+  - name: extras
+    description: Rocky Linux $releasever - Extras
+    mirrorlist: https://mirrors.rockylinux.org/mirrorlist?arch=$basearch&repo=extras-$releasever$rltype
+    file: external-lan-repo
+    gpgcheck: false
+    enabled: true
+
+  - name: epel
+    description: Extra Packages for Enterprise Linux $releasever - $basearch
+    metalink: https://mirrors.fedoraproject.org/metalink?repo=epel-$releasever&arch=$basearch&infra=$infra&content=$contentdir
+    file: external-lan-repo
+    gpgcheck: false
+    enabled: true
+
+  - name: centos-ceph-reef
+    description: CentOS-$stream - Ceph Reef
+    metalink: https://mirrors.centos.org/metalink?repo=centos-storage-sig-ceph-reef-9-stream&arch=$basearch
+    gpgcheck: false
+    file: external-lan-repo
+    enabled: true
+
+  - name: centos-rabbitmq-38
+    description: CentOS-9 - RabbitMQ 38
+    metalink: https://mirrors.centos.org/metalink?repo=centos-messaging-sig-rabbitmq-38-$releasever-stream&arch=$basearch&protocol=https,http
+    file: external-lan-repo
+    gpgcheck: false
+    enabled: true
+
+  - name: centos-nfv-openvswitch
+    description: NFV SIG RHEL $releasever - NFV OpenvSwitch
+    metalink: https://mirrors.centos.org/metalink?repo=centos-nfv-sig-openvswitch-common-$releasever&arch=$basearch&protocol=https,http
+    file: external-lan-repo
+    gpgcheck: false
+    enabled: true
+  
+  - name: centos-openstack-bobcat
+    description: CentOS-$releasever - OpenStack bobcat
+    metalink: https://mirrors.centos.org/metalink?repo=centos-cloud-sig-openstack-bobcat-$releasever-stream&arch=$basearch&protocol=https,http
+    file: external-lan-repo
+    gpgcheck: false
+    enabled: true
+
+  - name: ceph
+    description: Ceph $basearch
+    baseurl: https://download.ceph.com/rpm-reef/el9/$basearch
+    file: external-lan-repo
+    enabled: true
+    gpgcheck: false
+
+  - name: ceph-noarch
+    description: Ceph noarch
+    baseurl: https://download.ceph.com/rpm-reef/el9/noarch
+    file: external-lan-repo
+    enabled: true
+    gpgcheck: false
+
+  - name: ceph-srpms
+    description: Ceph SRPMS
+    baseurl: https://download.ceph.com/rpm-reef/el9/SRPMS
+    file: external-lan-repo
+    enabled: true
+    gpgcheck: false

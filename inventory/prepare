@@ -1,2 +1,2 @@
 [download]
-download ansible_host=10.130.39.42
+repository ansible_host=10.130.39.42

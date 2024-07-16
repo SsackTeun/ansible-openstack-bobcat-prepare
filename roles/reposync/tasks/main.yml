@@ -1,14 +1,15 @@
 ---
 # tasks file for reposync
-- name: dnf repolist
-  include_tasks: dnf_repolist.yml
+- name: Get repository list this system
+  ansible.builtin.shell:
+    cmd: dnf repolist | awk 'NR>1 {print $1}'
   register: result
 
 - name: reposync
   block:
     - ansible.builtin.shell:
-        cmd: "reposync --repo={{ item }} --download-path={{ reposync_path }} --download-metadata"
-        creates: "{{ reposync_path }}/{{ item }}"
+        cmd: "reposync --repo={{ item }} --download-path={{ repository_root_path }} --download-metadata"
+        creates: "{{ repository_root_path }}/{{ item }}"
       loop: "{{ result.stdout_lines }}"
   rescue:
     - name: When interrupted Kill process

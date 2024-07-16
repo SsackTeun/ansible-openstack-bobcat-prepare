@@ -1,0 +1,15 @@
+---
+# tasks file for roles/add-repository
+- name: Add Repository
+  ansible.builtin.yum_repository:
+    name: "{{ item.name }}"
+    description: "{{ item.description }}"
+    metalink: "{{ item.metalink | default(omit) }}"
+    mirrorlist: "{{ item.mirrorlist | default(omit) }}"
+    baseurl: "{{ item.baseurl | default(omit) }}"
+    enabled: "{{ item.enabled | default('true') }}"
+    gpgcheck: "{{ item.gpgcheck | default('no') }}"
+    file: "{{ item.file | default(omit)}}"
+    gpgkey: "{{ item.gpgkey | default(omit) }}"
+    state: "{{ item.state | default('present') }}"
+  loop: "{{ repositories }}"
