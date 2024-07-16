@@ -1,0 +1,94 @@
+---
+# tasks file for roles/get-registry-list-from-org
+- name: Calculate Page this Org
+  ansible.builtin.uri:
+    url: "{{ request_url }}/?ordering=last_updated&page=1&page_size=100"
+    method: GET
+    return_content: yes
+  register: results
+
+- name: TOTAL PAGE
+  set_fact:
+    total_pages: "{{ (results.json.count // 100) + 1 }}"
+
+- name: DEBUG
+  debug:
+    var: total_pages
+ 
+- name: Page 1 to {{ total_pages }}
+  ansible.builtin.uri:
+    url: "{{ request_url }}/?ordering=last_updated&page={{ item }}&page_size=100"
+    method: GET
+    return_content: yes
+  #loop: "{{ range(1, 2) }}"
+  loop: "{{ range(1, total_pages+1 | int ) | list }}" 
+  register: page_results
+
+- name: extract from page_results
+  set_fact:
+    repositories: "{{ all_names | default([]) + (page_results.results | map(attribute='json.results') | flatten | map(attribute='name') | list) }}"
+
+- name: Ensure registry_list
+  assert:
+    that:
+      - repositories is defined
+      - repositories | length > 0
+    fail_msg: "No repositories found for namespace {{ namespace }}"
+
+- name: save registry_list to file
+  ansible.builtin.template:
+    src: extract_name.j2
+    dest: "{{ role_path }}/files/registry.list"
+  delegate_to: localhost
+
+- name: ReadFile from list
+  set_fact:
+    image_list: "{{ lookup('file', role_path + '/files/registry.list').splitlines() }}"
+
+- name: find tag:{{ specific_tag }}
+  shell: |
+    podman search --list-tags {{ item }} | grep {{ specific_tag }}
+  loop: "{{ image_list }}"
+  register: image_tag_list
+  ignore_errors: yes
+
+- name: Transform the stdout_lines result
+  set_fact:
+    transformed_lines: >-
+          {{
+            image_tag_list.results
+            | selectattr('stdout', 'defined')
+            | selectattr('stdout', '!=', None)
+            | map(attribute='stdout')
+            | map('regex_replace', '\s+', ':')
+            | list
+          }}
+
+- name: Display the transformed result
+  debug:
+    var: transformed_lines
+  ignore_errors: yes
+
+- name: Create a file with the list content
+  block:
+    - copy:
+        content: |
+          {% for item in transformed_lines %}
+          {% if item != "" %}
+          {{ item }}
+          {% endif %}
+          {% endfor %}
+        dest: "{{ role_path }}/files/include_tag.list"
+        force: yes
+      delegate_to: localhost
+  rescue:
+    - name: Handle failure
+      debug:
+        msg: "This image has no correct tag"
+    - name: Fail the playbook
+      fail:
+        msg: "File creation failed"
+  ignore_errors: yes
+
+
+ 

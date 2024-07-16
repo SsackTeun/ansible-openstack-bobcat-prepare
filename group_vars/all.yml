@@ -137,15 +137,7 @@ kolla_services:
 ##############
 # service-images-pull
 # ############
-etc_images:
-  - docker.io/sonatype/nexus3:latest
-  - docker.io/library/nginx:1.25.5
-  - docker.io/registry:2.8.3
-  - quay.io/ceph/ceph:v18
-  - quay.io/ceph/ceph-grafana:9.4.7
-  - quay.io/prometheus/prometheus:v2.43.0
-  - quay.io/prometheus/alertmanager:v0.25.0
-  - quay.io/prometheus/node-exporter:v1.5.0
+
     
 ##############
 ## images-save

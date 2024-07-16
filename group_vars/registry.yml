@@ -1,0 +1,17 @@
+images:
+  - name: docker.io/sonatype/nexus3
+    tag: latest
+  - name: docker.io/library/nginx
+    tag: 1.25.5
+  - name: docker.io/registry
+    tag: 2.8.3
+  - name: quay.io/ceph/ceph
+    tag: v18
+  - name: quay.io/ceph/ceph-grafana
+    tag: 9.4.7
+  - name: quay.io/prometheus/prometheus
+    tag: v2.43.0
+  - name: quay.io/prometheus/alertmanager
+    tag: v0.25.0
+  - name: quay.io/prometheus/node-exporter
+    tag: v1.5.0

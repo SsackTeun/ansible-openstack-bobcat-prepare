@@ -1,36 +1,51 @@
 - name: Image Pull & Save
   hosts: registry
   tasks:
-    # (NGINX, REGISTRY, CEPH..)
-    - name: Apply Role service-image-pull
-      include_role:
-        name: service-images-pull
-      vars:
-        pull_images: "{{ etc_images }}"
-
-    - name: podman images 명령을 통해서 리스트 생성
+    # pull from group_vars/registry.yml
+    - name: 콜라이미지를 제외한 이미지 Pull
       ansible.builtin.include_role:
-        name: podman-images
-      vars:
-        tag_version: ""
-        podman_images_result: "{{ podman_images }}"
+        name: image-pull
+      register: image_pull_result
 
-    - name:
+    - name: image_pull_result
       debug:
-        var: podman_images_result
+        var: image_pull_result
 
-    - name: Pull-Kolla-Image
-      include_role:
-        name:  pull-all-kolla-image
-      ignore_errors: true
-
-    - name:
-      ansible.builtin.include_role:
-        name: ensure_dir
+    - name: 특정 ORG 대상으로 모든 레포지토리 검색 후, 특정 태그로 다시 검색하여 리스트 추출
+      ansible.builtin.import_role:
+        name: get-registry-list-from-org
       vars:
-        path: "{{ registry_image_path }}"
+        registry_url: "docker.io"
+        namespace: "kolla"
+        registry_api_url: "https://hub.docker.com/v2/repositories"
+        request_url: "{{ registry_api_url }}/{{ namespace }}"
+        specific_tag: "2023.2-rocky-9"
 
-    - ansible.builtin.include_role:
-        name: images-save
-      vars:
-        save_list: "{{ podman_images }}" 
+
+
+    # - name: podman images 명령을 통해서 리스트 생성
+    #   ansible.builtin.include_role:
+    #     name: podman-images
+    #   vars:
+    #     tag_version: ""
+    #     podman_images_result: "{{ podman_images }}"
+
+    # - name:
+    #   debug:
+    #     var: podman_images_result
+
+    # - name: Pull-Kolla-Image
+    #   include_role:
+    #     name:  pull-all-kolla-image
+    #   ignore_errors: true
+
+    # - name:
+    #   ansible.builtin.include_role:
+    #     name: ensure_dir
+    #   vars:
+    #     path: "{{ registry_image_path }}"
+
+    # - ansible.builtin.include_role:
+    #     name: images-save
+    #   vars:
+    #     save_list: "{{ podman_images }}" 

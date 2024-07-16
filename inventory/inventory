@@ -27,7 +27,7 @@ repository ansible_host=10.130.39.42
 #repository ansible_host=192.168.24.7 ansible_port=10975
 
 [registry]
-myregistry ansible_host=10.130.39.42
+registry ansible_host=10.130.39.42
 #myregistry ansible_host=192.168.24.7 ansible_port=10975
 
 [copy-repofile-target:children]

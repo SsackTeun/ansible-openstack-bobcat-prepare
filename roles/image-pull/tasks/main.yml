@@ -1,0 +1,7 @@
+---
+- name: "pull-images from group_vars/registry.yml"
+  containers.podman.podman_image:
+    name: "{{ item.name }}"
+    tag: "{{ item.tag }}"
+  loop: "{{ images }}"
+
