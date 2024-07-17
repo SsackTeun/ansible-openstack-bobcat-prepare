@@ -21,7 +21,7 @@
     method: GET
     return_content: yes
   #loop: "{{ range(1, 2) }}"
-  loop: "{{ range(1, total_pages+1 | int ) | list }}" 
+  loop: "{{ range(1, (total_pages | int ) + 1) | list }}" 
   register: page_results
 
 - name: extract from page_results
