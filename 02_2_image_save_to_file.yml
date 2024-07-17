@@ -1,0 +1,17 @@
+- name: EXEC podman save image (all) 
+  hosts: registry
+  tasks:
+    - name: podman images
+      ansible.builtin.include_role:
+        name: podman-images
+      register: podman_images
+
+    - name: debug
+      debug:
+        msg: "{{ podman_images }}"
+    
+    - name: podman save
+      ansible.builtin.include_role:
+        name: images-save
+      loop: "{{ podman_images.stdout_lines }}"
+         

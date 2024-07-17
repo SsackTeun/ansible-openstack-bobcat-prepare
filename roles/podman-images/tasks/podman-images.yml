@@ -2,5 +2,9 @@
 - name: List Podman images
   shell: "podman images -n --format '{% raw %}{{.Repository}}:{{.Tag}}{% endraw %}'"
     #shell: "podman images -n --format '{% raw %}{{.Repository}}:{{.Tag}}{% endraw %}' --filter 'reference=*:{{ tag_version }}'"
-  register: podman_images
+  register: podman_images_result
+
+- name: Set fact for podman images
+  set_fact:
+    podman_images: "{{ podman_images_result }}"
 

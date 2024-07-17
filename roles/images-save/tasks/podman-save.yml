@@ -4,6 +4,5 @@
   containers.podman.podman_save:
     image: "{{ item }}"
     dest: "{{ registry_image_path }}/{{ item | replace('/', '_') | replace(':', '_') }}.tar"
-  loop: "{{ save_list.stdout_lines }}"
 
 

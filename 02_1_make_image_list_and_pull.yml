@@ -1,4 +1,4 @@
-- name: Image Pull & Save
+- name: make image pull list & pull
   hosts: registry
   tasks:
     # pull from group_vars/registry.yml
@@ -34,4 +34,4 @@
     - name: debug
       debug: 
         msg: kolla_image_pull_result
-      
+    
