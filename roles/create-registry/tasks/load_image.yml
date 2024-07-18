@@ -2,7 +2,7 @@
 # tasks file for roles/import_image
 - name: find image files
   find:
-    paths: "{{ registry_file_path }}"
+    paths: "{{ registry_image_save_path }}"
     patterns: "*.tar"
     recurse: yes
   register: image_files

@@ -39,14 +39,14 @@ http {
         listen       80;
         listen       [::]:80;
         server_name  _;
-        root         {{ container_volume_path }}/;
+        root         {{ nginx_container_config.container_volume }}/;
 	
 	location / {
                 autoindex on;
 
 {% for repo in repositories %}
        		location /{{ repo.name }}/ {
-                        alias {{ container_volume_path }}/{{ repo.name }}/;
+                        alias {{ nginx_container_config.container_volume }}/{{ repo.name }}/;
                 }
 {% endfor %}
 	}

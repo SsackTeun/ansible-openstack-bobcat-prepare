@@ -10,14 +10,21 @@ registry_image_save_path: "{{ root_path }}/registry"
 # `REPOSYNC` ROOT PATH
 repository_file_save_path: "{{ root_path }}/repository"
 
-# NGINX CONFIG PATH
+####################################################################
+# REPOSITORY CONFIG 
+####################################################################
+nginx_container_config:
+  container_image_path: "{{ registry_image_save_path }}"
+  port: "80:80"
+  hostname: "root"
+  conf_path: /etc/nginx.conf
+  mount_volume: "{{ repository_file_save_path }}"
+  container_volume: /repository
+
+###################################################################
+# REGISTRY CONFIG
+# #################################################################
 registry_image_path: "{{ registry_image_save_path }}"
-nginx_conf_create_path: /etc/nginx.conf
-local_volume_path: "{{ repository_file_save_path }}" # Set your repository filepath
-container_volume_path: /repository
-
-
-
 
 ##================== HOST ===============================##
 controllers:
@@ -71,10 +78,6 @@ gits:
     version: "stable/2023.2"
     git_filename: "file:///{{ dest_root }}/kolla-ansible"
 
-##================  NGINX SERVER (REPOSITORY) =============##
-nginx_conf_copy_path: "{{ localrepo_file }}"
-nginx_port: "80:80"
-nginx_hostname: "root"
 
 ##================  REGISTRY SERVER =======================##
 private_registry_hosts: "myregistry"

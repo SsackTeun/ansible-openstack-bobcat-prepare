@@ -5,18 +5,18 @@
     state: started
     recreate: true
     ports:
-      - "{{ nginx_port }}" # 80:80
-    hostname: "{{ nginx_hostname }}"
+      - "{{ nginx_container_config.port }}" # 80:80
+    hostname: "{{ nginx_container_config.hostname }}"
     volumes:
-      - "{{ local_volume_path }}:/repository:ro" # repository 경로 마운트
-      - "{{ nginx_conf_create_path }}:/etc/nginx/nginx.conf" # nginx conf 경로 마운트
+      - "{{ nginx_container_config.mount_volume }}:{{ nginx_container_config.container_volume }}:ro" # repository 경로 마운트
+      - "{{ nginx_container_config.conf_path }}:/etc/nginx/nginx.conf" # nginx conf 경로 마운트
     restart_policy: unless-stopped
     interactive: false # option -i
     tty: false # option -t
 
 - name: SELINUX Config
   ansible.builtin.shell:
-    cmd: "chcon -R -t httpd_sys_content_t {{ local_volume_path }}"
+    cmd: "chcon -R -t httpd_sys_content_t {{ nginx_container_config.mount_volume }}"
 
 - name: SELINUX Permissive
   selinux:

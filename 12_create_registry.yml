@@ -7,5 +7,5 @@
       include_role:
         name: create-registry
       vars:
-        registry_file_path: "{{ registry_image_path }}"    
+        registry_file_path: "{{ registry_image_save_path }}"    
 

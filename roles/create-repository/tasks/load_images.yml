@@ -2,7 +2,7 @@
 # tasks file for roles/create_repository
 - name: find image files (.tar file)
   find:
-    paths: "{{ registry_image_path }}/"
+    paths: "{{ nginx_container_config.container_image_path }}/"
     patterns: "*nginx*.tar"
     recurse: yes
   register: image_files

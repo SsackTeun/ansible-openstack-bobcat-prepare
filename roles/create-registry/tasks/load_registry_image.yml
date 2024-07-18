@@ -2,7 +2,7 @@
 # tasks file for roles/create_registry
 - name: find image files (.tar file)
   find:
-    paths: "{{ registry_image_path }}/"
+    paths: "{{ registry_image_save_path }}/"
     patterns: "*registry*.tar"
     recurse: yes
   register: image_files

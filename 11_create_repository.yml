@@ -3,7 +3,7 @@
   hosts: repository
   become: true
   vars_files:
-    - group_vars/pre-repository.yml
+    - group_vars/repository.yml
   tasks:
     - name: create_repository
       include_role:
