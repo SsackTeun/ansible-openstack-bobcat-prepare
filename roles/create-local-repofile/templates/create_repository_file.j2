@@ -1,7 +1,7 @@
 {% for repo in repodata %}
 [{{ repo.repoid }}]
 name={{ repo.reponame }}
-baseurl={{ localrepo_baseurl }}/{{ repo.repoid }}
+baseurl=http://{{ groups['repository'] | first }}/{{ repo.repoid }}
 enabled=1
 gpgcheck=0
 

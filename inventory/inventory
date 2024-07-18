@@ -1,13 +1,14 @@
-# INTERNAL
-[chrony-server]
-chrony-server ansible_host=10.130.39.42
-#chrony-server ansible_host=192.168.24.7 ansible_port=10975
+########################################
+[pre-repository]
+pre_repository ansible_host=10.130.39.42
 
-[chrony-client:children]
-ceph
-compute
-controller
+[pre-registry]
+pre_registry ansible_host=10.130.39.42
 
+[pre-python-repo]
+pre_python_repo ansible_host=10.130.39.42
+
+########################################
 [ceph]
 ceph-1 ansible_host=10.130.39.21
 ceph-2 ansible_host=10.130.39.22
@@ -24,15 +25,22 @@ controller3 ansible_host=10.130.39.13
 
 [repository]
 repository ansible_host=10.130.39.42
-#repository ansible_host=192.168.24.7 ansible_port=10975
 
 [registry]
 registry ansible_host=10.130.39.42
-#myregistry ansible_host=192.168.24.7 ansible_port=10975
 
-[copy-repofile-target:children]
+[chrony-server]
+chrony-server ansible_host=10.130.39.42
+
+[chrony-client:children]
 ceph
 compute
 controller
+
+[internal:children]
+ceph
+compute
+controller
+repository
 
 

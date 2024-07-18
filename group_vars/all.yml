@@ -1,3 +1,7 @@
+# PATH
+root_path: /openstack-files
+
+
 ##================== HOST ===============================##
 controllers:
   - ip: 10.130.39.26
@@ -30,119 +34,6 @@ repository:
   - ip: 10.130.39.41
     hostname: repository myregistry time.local.net
 
-##=================== PATH ============================##
-root_path: /openstack-files
-##=================== REPOSITORY ======================##
-##############
-## reposync
-##############
-reposync_path: "{{ root_path }}/repository"
-
-##############
-## install-yum-package
-##############
-# yum install package
-packages:
-  - centos-release-openstack-bobcat
-  - centos-release-ceph-reef
-  - cephadm
-  - yum-utils
-  - epel-release
-  - ceph-common
-  - centos-release-nfv-openvswitch
-  - centos-release-rabbitmq-38
-##############
-## install-cephadm-package
-##############
-# cephadm add-repo --release {{ ceph_version }}
-ceph_version: reef
-
-##############
-## create-local-repofile
-##############
-localrepo_baseurl: http://repository
-localrepo_filename: local
-localrepo_file: "{{ reposync_path }}"
-
-##====================== REGISTRY =====================##
-external_registry_url: "https://hub.docker.com/v2/repositories"
-external_registry_namespace: "kolla"
-external_request_url: "{{ external_registry_url }}/{{ external_registry_namespace }}"
-external_image_prefix: "docker.io/{{ external_registry_namespace }}"
-specific_tag: "2023.2-rocky-9"
-##############
-## find_images_with_tag 
-##############
-kolla_registry_prefix: "docker.io/kolla"
-kolla_tag_version: "2023.2-rocky-9"
-kolla_services:
-  - aodh
-  - barbican
-  - blazar
-  - ceilometer
-  - ceph_rgw
-  - cinder
-  - cloudkitty
-  - collectd
-  - cyborg
-  - designate
-  - etcd
-  - fluentd
-  - cron
-  - kolla-toolbox
-  - keepalived
-  - haproxy
-  - openvswitch-db-server
-  - openvswitch-vswitchd
-  - glance
-  - gnocchi
-  - grafana
-  - hacluster
-  - heat
-  - horizon
-  - influxdb
-  - ironic
-  - iscsid
-  - keystone
-  - kuryr
-  - letsencrypt
-  - loadbalancer
-  - magnum
-  - manila
-  - mariadb
-  - masakari
-  - memcached
-  - mistral
-  - multipathd
-  - neutron
-  - nova
-  - octavia
-  - opensearch
-  - opensearch_dashboards
-  - openvswitch_enable_ovs_dpdk
-  - ovn
-  - placement
-  - prometheus
-  - rabbitmq
-  - redis
-  - skyline
-  - swift
-  - tacker
-  - telegraf
-  - trove
-  - venus
-  - watcher
-  - zun
-
-##############
-# service-images-pull
-# ############
-
-    
-##############
-## images-save
-##############
-registry_image_path: "{{ root_path }}/registry"
 
 ##================= KOLLA-ANSIBLE INSTALL ==================##
 # 현재 디렉토리의 전체 경로를 가져옵니다.
@@ -190,8 +81,6 @@ nexus_pip_reponame: "python-pip"
 nexus_pip_trusted_host: "{{ nexus_domain }}"
 
 ##=============== CEPH_INSTALL ============================##
-chrony_server_host: "{{ groups['chrony-server'] | first }}"
-chrony_server_cidr: "192.168.24.0/24"
 # ceph config set mgr mgr/cephadm/container_image
 ceph_image: ceph/ceph:v18
 grafana: ceph/ceph-grafana:9.4.7

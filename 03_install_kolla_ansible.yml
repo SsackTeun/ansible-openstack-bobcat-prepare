@@ -1,5 +1,5 @@
 ---
-- name: repofile create
+- name: kolla-ansible 설치
   hosts: localhost
   become: true
   roles:

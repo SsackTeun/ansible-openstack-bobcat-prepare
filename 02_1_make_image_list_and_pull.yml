@@ -1,5 +1,5 @@
 - name: make image pull list & pull
-  hosts: registry
+  hosts: pre-registry
   tasks:
     # pull from group_vars/registry.yml
     - name: 콜라이미지를 제외한 이미지 Pull

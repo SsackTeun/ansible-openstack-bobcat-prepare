@@ -1,5 +1,5 @@
 - name: EXEC podman save image (all) 
-  hosts: registry
+  hosts: pre-registry
   tasks:
     - name: podman images
       ansible.builtin.include_role:

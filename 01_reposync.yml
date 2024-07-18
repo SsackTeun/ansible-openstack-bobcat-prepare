@@ -1,7 +1,8 @@
 ---
 - name: REPOSYNC 
-  hosts: repository
+  hosts: pre-repository
   become: true
   roles:
     - add-repository
+    - create-local-repofile
     - reposync

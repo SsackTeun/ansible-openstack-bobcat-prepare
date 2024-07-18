@@ -1,5 +1,5 @@
 # DIRECTORY SETTING
-repository_root_path: "/openstack-files/repository"
+repository_root_path: "{{ root_path }}/repository"
 
 # REPOSITORY
 repositories:

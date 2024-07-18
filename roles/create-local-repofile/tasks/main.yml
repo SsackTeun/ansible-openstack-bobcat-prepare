@@ -1,8 +1,5 @@
 ---
 # tasks file for create-local-repo
-- name: ensure dir
-  import_tasks: ensure_dir.yml
-
 - name: dnf repolist & get repoid, reponame
   import_tasks: dnf_repolist_detail.yml 
 

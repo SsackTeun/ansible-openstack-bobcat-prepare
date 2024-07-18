@@ -1,6 +1,12 @@
 ---
-- name: repofile create
+- name: Create Chrony Server
   hosts: chrony-server
   become: true
   roles:
     - create-chrony-server
+
+- name: Config Chrony Client
+  hosts: chrony-client
+  become: true
+  roles:
+    - copy-chrony-conf
