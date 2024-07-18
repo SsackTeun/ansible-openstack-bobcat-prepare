@@ -1,5 +1,5 @@
 # DIRECTORY SETTING
-repository_root_path: "{{ root_path }}/repository"
+repository_root_path: "{{ repository_file_save_path }}"
 
 # REPOSITORY
 repositories:

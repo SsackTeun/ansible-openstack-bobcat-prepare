@@ -2,11 +2,11 @@
 - name: CREATE REPOSITORY SERVER
   hosts: repository
   become: true
+  vars_files:
+    - group_vars/pre-repository.yml
   tasks:
     - name: create_repository
       include_role:
         name: create-repository
-      vars:
-        repository_file_path: "{{ localrepo_file }}"
-    
+         
 

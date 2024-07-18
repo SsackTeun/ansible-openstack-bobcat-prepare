@@ -39,50 +39,16 @@ http {
         listen       80;
         listen       [::]:80;
         server_name  _;
-        root         /{{ groups['repository'] | first }}/;
+        root         {{ container_volume_path }}/;
 	
 	location / {
                 autoindex on;
-	
-       		location /appstream/ {
-                        alias /{{ groups['repository'] | first }}/appstream/;
-                }
 
-                location /baseos/ {
-                        alias /{{ groups['repository'] | first }}/baseos/;
+{% for repo in repositories %}
+       		location /{{ repo.name }}/ {
+                        alias {{ container_volume_path }}/{{ repo.name }}/;
                 }
-
-                location /ceph-noarch/ {
-                        alias /{{ groups['repository'] | first }}/Ceph-noarch/;
-                }
-
-                location /ceph-source/ {
-                        alias /{{ groups['repository'] | first }}/Ceph-source/;
-                }
-
-                location /ceph/ {
-                        alias /{{ groups['repository'] | first }}/Ceph/;
-                }
-
-                location /nfv/ {
-                        alias /{{ groups['repository'] | first }}/centos-nfv-openvswitch/;
-                }
-
-                location /openstack/ {
-                        alias /{{ groups['repository'] | first }}/centos-openstack-bobcat/;
-                }
-
-                location /rabbitmq/ {
-                        alias /{{ groups['repository'] | first }}/centos-rabbitmq-38/;
-                }
-
-                location /epel/ {
-                        alias /{{ groups['repository'] | first }}/epel/;
-                }
-
-                location /extras/ {
-                        alias /{{ groups['repository'] | first }}/extras/;
-                }
+{% endfor %}
 	}
        	# Load configuration files for the default server block.
         include /etc/nginx/default.d/*.conf;

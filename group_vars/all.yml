@@ -1,5 +1,22 @@
-# PATH
+##########################################################
+# PATH CONFIGURATION
+##########################################################
+# `DOWNLOAD` ROOT PATH
 root_path: /openstack-files
+
+# `SAVE IMAGE` ROOT PATH
+registry_image_save_path: "{{ root_path }}/registry"
+
+# `REPOSYNC` ROOT PATH
+repository_file_save_path: "{{ root_path }}/repository"
+
+# NGINX CONFIG PATH
+registry_image_path: "{{ registry_image_save_path }}"
+nginx_conf_create_path: /etc/nginx.conf
+local_volume_path: "{{ repository_file_save_path }}" # Set your repository filepath
+container_volume_path: /repository
+
+
 
 
 ##================== HOST ===============================##

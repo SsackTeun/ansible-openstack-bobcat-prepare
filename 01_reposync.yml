@@ -1,6 +1,8 @@
 ---
 - name: REPOSYNC 
   hosts: pre-repository
+  vars_file:
+    - group_vars/repository.yml
   become: true
   roles:
     - add-repository

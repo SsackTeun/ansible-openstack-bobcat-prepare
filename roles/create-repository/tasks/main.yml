@@ -3,5 +3,8 @@
 - name: nginx image load
   import_tasks: load_images.yml 
 
+- name: create-nginx-conf
+  import_tasks: create-nginx-conf.yml
+
 - name: nginx deply
   import_tasks: nginx_deploy.yml 
