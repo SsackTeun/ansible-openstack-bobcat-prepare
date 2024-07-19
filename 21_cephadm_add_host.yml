@@ -1,0 +1,17 @@
+- name: cephadd-host
+  hosts: "{{ groups['ceph'] | first }}"
+  vars:
+    hosts: "{{ ceph.hosts }}"
+  become: yes
+  tasks:
+    - name: ceph orch host add
+      ansible.builtin.command: >
+        ceph orch host add {{ item }}
+      loop: "{{ hosts.add }}"
+      register: ceph_orch_host_add_result
+
+    - name: debug 
+      debug:
+        msg: "{{ ceph_orch_host_add_result }}"
+      
+

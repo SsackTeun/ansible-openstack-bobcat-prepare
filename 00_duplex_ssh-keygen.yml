@@ -1,0 +1,49 @@
+---
+- name: SSH 키 생성 및 노드로 복사
+  hosts: internal
+  gather_facts: false
+  tasks:
+    - name: 모든 노드에서 기존 SSH 키 확인
+      stat:
+        path: "~/.ssh/id_rsa"
+      register: ssh_key_exists
+
+    - name: 모든 노드에서 SSH 키 생성
+      command: "ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ''"
+      ignore_errors: yes
+      when: not ssh_key_exists.stat.exists     
+
+    - name: 모든 노드에서 SSH 공개 키 수집
+      shell: cat ~/.ssh/id_rsa.pub
+      register: ssh_pub_keys
+      ignore_errors: yes
+
+    - name: SSH 공개 키를 제어 노드로 복사
+      local_action: copy content="{{ ssh_pub_keys.stdout }}" dest="/tmp/{{ inventory_hostname }}_id_rsa.pub"
+      ignore_errors: yes
+  
+- name: 제어 노드에서 SSH 공개 키 통합
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: 모든 SSH 공개 키를 하나의 파일로 통합
+      shell: "awk '1' /tmp/*_id_rsa.pub > /tmp/all_nodes_id_rsa.pub"
+      run_once: true
+
+    - name: 임시 키파일 제거
+      file:
+        path: "/tmp/{{ item }}_id_rsa.pub"
+        state: absent
+      with_items: "{{ groups['internal'] }}"
+
+
+- name: 통합된 SSH 키를 모든 노드에 배포
+  hosts: internal
+  gather_facts: false
+  tasks:
+    - name: 통합된 SSH 공개 키를 authorized_keys 파일에 복사
+      authorized_key:
+        user: root
+        state: present
+        key: "{{ lookup('file', '/tmp/all_nodes_id_rsa.pub') }}"
+

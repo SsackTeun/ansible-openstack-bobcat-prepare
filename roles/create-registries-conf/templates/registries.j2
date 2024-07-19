@@ -1,0 +1,6 @@
+unqualified-search-registries = [ "{{ private_registry_url }}", "registry.access.redhat.com", "registry.redhat.io", "docker.io" ]
+short-name-mode = "enforcing"
+[[registry]]
+prefix = "{{ private_registry_url }}"
+location = "{{ private_registry_url }}"
+insecure = {{ private_registry_insecure }}

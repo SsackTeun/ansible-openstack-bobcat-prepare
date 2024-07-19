@@ -86,6 +86,7 @@ private_registry_url: "myregistry:5000"
 private_registry_username: admin
 private_registry_password: admin
 private_registry_server_auth: "{{ registry_image_path }}/auth"
+private_registry_insecure: "true"
 
 ##=============== NEXUS3 SERVER ===========================##
 nexus_port: "8081:8081" # 80:80
@@ -102,6 +103,28 @@ nexus_pip_trusted_host: "{{ nexus_domain }}"
 
 ##=============== CEPH_INSTALL ============================##
 # ceph config set mgr mgr/cephadm/container_image
+ceph:
+  bootstrap:
+    registry: 
+      url: "myregistry:5000"
+      username: "admin"
+      password: "admin"
+      image: "myregistry:5000/ceph/ceph:v18"
+    mon_ip: "10.130.39.21"
+    initial_conf:
+      images:
+        - mgr/cephadm/container_image_prometheus = {{ private_registry_url }}:5000/prometheus
+        - mgr/cephadm/container_image_node_exporter = {{ private_registry_url }}:5000/node_exporter
+        - mgr/cephadm/container_image_grafana = {{ private_registry_url }}:5000/grafana
+        - mgr/cephadm/container_image_alertmanager = {{ private_registry_url }}:5000/alertmanger
+  hosts:
+    add:
+      - ceph-2
+      - ceph-3
+
+
+
+
 ceph_image: ceph/ceph:v18
 grafana: ceph/ceph-grafana:9.4.7
 prometheus: prometheus/prometheus:v2.43.0
@@ -113,6 +136,7 @@ custom_images:
   - "ceph config set mgr mgr/cephadm/container_image_grafana {{ private_registry_url }}/{{ grafana }}"
   - "ceph config set mgr mgr/cephadm/container_image_alertmanager {{ private_registry_url }}/{{ alertmanager }}"
   - "ceph config set mgr mgr/cephadm/container_image_node_exporter {{ private_registry_url }}/{{ node_exporter }}"
+
 
 # ceph-orch-label
 ceph_node:

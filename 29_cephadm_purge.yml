@@ -1,0 +1,32 @@
+- name: Cephadm Purge 
+  hosts: "{{ groups['ceph'] | first }}"
+  vars:
+    item: "{{ ceph.bootstrap }}"
+  tasks:
+    - name: ceph mgr module disable cephadm 
+      ansible.builtin.command: > 
+        ceph mgr module disable cephadm
+      register: ceph_disable_result
+
+    - name: debug 
+      debug:
+        msg: "{{ ceph_disable_result }}"
+
+    - name: ceph fsid
+      ansible.builtin.command: >
+        ceph fsid
+      register: ceph_fsid
+
+    - name: debug
+      debug:
+        msg: "{{ ceph_fsid.stdout }}"
+
+    - name: cephadm rm-cluster
+      ansible.builtin.command: >
+        cephadm rm-cluster --force --zap-osds --fsid {{ ceph_fsid.stdout }}
+      register: ceph_remove_cluster_result
+
+    - name: debug
+      debug:
+        msg: "{{ ceph_remove_cluster_result }}"
+

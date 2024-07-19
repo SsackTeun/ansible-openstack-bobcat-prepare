@@ -1,6 +1,7 @@
 ---
 # !NOTICE
 # required ansible.cfg options's "host_key_check=false"
+# Key Copy Ansible 배포 노드에서 제어노드로 SSH 연결 
 - name: Generate SSH-Key & Copy to Nodes
   hosts: all
   gather_facts: false

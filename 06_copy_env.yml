@@ -1,25 +1,32 @@
 ---
-- name: /etc/hosts create
-  hosts: all
-  become: true
-  roles:
-    - create-hostsfile 
+#- name: /etc/hosts create
+#  hosts: all
+#  become: true
+#  roles:
+#    - create-hostsfile 
 
-- name: copy yum.repos.d file
-  hosts: copy-repofile-target 
-  become: true
-  serial: 1
-  roles:
-    - copy-repofiles
+#- name: copy yum.repos.d file
+#  hosts: internal 
+#  become: true
+#  serial: 1
+#  roles:
+#    - copy-repofiles
 
-- name: copy chrony
-  hosts: chrony-client
+#- name: copy chrony
+#  hosts: chrony-client
+#  become: true
+#  roles:
+#    - copy-chrony-conf
+
+- name: create /etc/containers/registries.conf
+  hosts: internal
   become: true
   roles:
-    - copy-chrony-conf
+    - create-registries-conf
+  
   
 - name: copy podman-auth
-  hosts: copy-repofile-target
+  hosts: internal
   become: true
   roles:
     - create-podman-auth-json

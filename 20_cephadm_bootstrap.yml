@@ -1,0 +1,44 @@
+- name: Install cephadm Package
+  hosts: ceph
+  tasks:
+    - name: Install cephadm Package
+      ansible.builtin.package:
+        name: cephadm
+        state: present
+    
+    - name: Install ceph-common Package
+      ansible.builtin.package:
+        name: ceph-common
+        state: present
+
+
+- name: Bootstrap
+  hosts: "{{ groups['ceph'] | first }}"
+  vars:
+    item: "{{ ceph.bootstrap }}"
+  tasks:
+    - name: initial-ceph.conf < image_config
+      ansible.builtin.copy:
+        content: |
+          [mgr]
+          {% for image in ceph.bootstrap.initial_conf.images %}
+          {{ image }}
+          {% endfor %}
+        dest: /etc/ceph/initial-ceph.conf
+
+    - name: cephadm bootstrap --mon-ip {{ item.mon_ip }}
+      ansible.builtin.command: 
+        cephadm --image {{ item.registry.image }} \
+                bootstrap --mon-ip {{ item.mon_ip }} \
+                --config /etc/ceph/initial-ceph.conf \
+                --registry-url {{ item.registry.url }} \
+                --registry-username {{ item.registry.username }} \
+                --registry-password {{ item.registry.password }} \
+                --allow-overwrite
+      register: bootstrap_result
+
+    - name: debug 
+      debug:
+        msg: "{{ bootstrap_result }}"
+      
+

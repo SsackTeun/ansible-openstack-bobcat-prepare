@@ -1,0 +1,6 @@
+---
+# tasks file for roles/create-registries-conf
+- name: Create registries.conf > /etc/containers/registries.conf
+  template:
+    src: registries.j2
+    dest: /etc/containers/registries.conf
