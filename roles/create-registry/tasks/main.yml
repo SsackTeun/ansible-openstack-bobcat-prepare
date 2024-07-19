@@ -9,6 +9,3 @@
 - name: load_image.yml
   ansible.builtin.import_tasks: load_image.yml
 
-- name: push_image.yml
-  ansible.builtin.import_tasks: push_image.yml
-
