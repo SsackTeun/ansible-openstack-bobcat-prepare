@@ -102,7 +102,6 @@ nexus_pip_reponame: "python-pip"
 nexus_pip_trusted_host: "{{ nexus_domain }}"
 
 ##=============== CEPH_INSTALL ============================##
-# ceph config set mgr mgr/cephadm/container_image
 ceph:
   bootstrap:
     registry: 
@@ -118,12 +117,16 @@ ceph:
         - mgr/cephadm/container_image_grafana = {{ private_registry_url }}:5000/grafana
         - mgr/cephadm/container_image_alertmanager = {{ private_registry_url }}:5000/alertmanger
   hosts:
+    labels:
+      - name: ceph-1
+        label: mgr,mon,osd 
+      - name: ceph-2
+        label: mon,mds,nfs,osd
+      - name: ceph-3
+        label: mon,rgw,osd
     add:
       - ceph-2
       - ceph-3
-
-
-
 
 ceph_image: ceph/ceph:v18
 grafana: ceph/ceph-grafana:9.4.7

@@ -1,0 +1,17 @@
+- name: ceph orch host label add
+  hosts: "{{ groups['ceph'] | first }}"
+  vars:
+    hosts: "{{ ceph.hosts }}"
+  become: yes
+  tasks:
+    - name: ceph orch host add
+      ansible.builtin.command: >
+        ceph orch host label add {{ item.name }} {{ item.label }}
+      loop: "{{ hosts.labels }}"
+      register: ceph_orch_host_label_add_result
+
+    - name: debug 
+      debug:
+        msg: "{{ ceph_orch_host_label_add_result }}"
+      
+
