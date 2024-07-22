@@ -1,5 +1,5 @@
 - name: Cephadm Purge 
-  hosts: "{{ groups['ceph'] | first }}"
+  hosts: ceph
   vars:
     item: "{{ ceph.bootstrap }}"
   tasks:
@@ -21,12 +21,19 @@
       debug:
         msg: "{{ ceph_fsid.stdout }}"
 
-    - name: cephadm rm-cluster
-      ansible.builtin.command: >
-        cephadm rm-cluster --force --zap-osds --fsid {{ ceph_fsid.stdout }}
-      register: ceph_remove_cluster_result
 
-    - name: debug
-      debug:
-        msg: "{{ ceph_remove_cluster_result }}"
+#    - name: cephadm rm-cluster
+#      ansible.builtin.command: >
+#        cephadm rm-cluster --force --zap-osds --fsid {{ ceph_fsid.stdout }}
+#      register: ceph_remove_cluster_result
+#
+#    - name: debug
+#      debug:
+#        msg: "{{ ceph_remove_cluster_result }}"
 
+- name: Delete All Images
+  hosts: ceph
+  tasks:
+    - name: image remove
+      ansible.builtin.shell: >
+        podman rmi -f $(podman images -q)

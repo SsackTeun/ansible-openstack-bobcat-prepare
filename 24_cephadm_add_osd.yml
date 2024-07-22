@@ -1,0 +1,17 @@
+- name: OSD place to device and host
+  hosts: "{{ groups['ceph'] | first }}"
+  vars:
+    hosts: "{{ ceph.hosts }}"
+    default_label: "--all-available-devices"  # 기본 값 설정
+  become: yes
+  tasks:
+    - name: ceph orch apply osd
+      ansible.builtin.command: >
+        ceph orch apply osd {{ item | default(default_label) }}
+      register: ceph_orch_apply_osd_result
+
+    - name: debug 
+      debug:
+        msg: "{{ ceph_orch_apply_osd_result }}"
+      
+

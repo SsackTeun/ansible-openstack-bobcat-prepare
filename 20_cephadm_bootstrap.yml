@@ -1,5 +1,5 @@
 - name: Install cephadm Package
-  hosts: ceph
+  hosts: "{{ groups['ceph'] | first }}"
   tasks:
     - name: Install cephadm Package
       ansible.builtin.package:
@@ -17,6 +17,11 @@
   vars:
     item: "{{ ceph.bootstrap }}"
   tasks:
+    - name: Ensure Dir
+      ansible.builtin.file:
+        path: /etc/ceph
+        state: directory
+
     - name: initial-ceph.conf < image_config
       ansible.builtin.copy:
         content: |

@@ -1,0 +1,24 @@
+---
+- name: Extract fsid and remove Ceph cluster
+  hosts: ceph
+  gather_facts: no
+  tasks:
+    - name: Run ceph fsid command
+      command:  ceph fsid
+      register: fsid_output
+      ignore_errors: yes
+      delegate_to: ceph-1 
+
+    - name: Debug fsid command output
+      debug:
+        msg: "Command output: {{ fsid_output }}"
+
+    - name: Remove Ceph cluster for each fsid
+      command: cephadm rm-cluster --force --zap-osds --fsid "{{ fsid_output.stdout }}"
+      register: removal_result
+      ignore_errors: yes
+
+    - name: Show removal results
+      debug:
+        msg: "Removal result: {{ item }}"
+      loop: "{{ removal_result }}"
