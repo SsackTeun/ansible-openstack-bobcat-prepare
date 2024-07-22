@@ -102,6 +102,12 @@ nexus_pip_reponame: "python-pip"
 nexus_pip_trusted_host: "{{ nexus_domain }}"
 
 ##=============== CEPH_INSTALL ============================##
+custom_images:
+  grafana: ceph/ceph-grafana:9.4.7
+  prometheus: prometheus/prometheus:v2.43.0
+  alertmanager: prometheus/alertmanager:v0.25.0
+  node_exporter: prometheus/node-exporter:v1.5.0
+
 ceph:
   bootstrap:
     registry: 
@@ -112,10 +118,10 @@ ceph:
     mon_ip: "10.130.39.21"
     initial_conf:
       images:
-        - mgr/cephadm/container_image_prometheus = {{ private_registry_url }}:5000/prometheus
-        - mgr/cephadm/container_image_node_exporter = {{ private_registry_url }}:5000/node_exporter
-        - mgr/cephadm/container_image_grafana = {{ private_registry_url }}:5000/grafana
-        - mgr/cephadm/container_image_alertmanager = {{ private_registry_url }}:5000/alertmanger
+        - mgr/cephadm/container_image_prometheus = "{{ private_registry_url }}/{{ custom_images.prometheus }}"
+        - mgr/cephadm/container_image_node_exporter = "{{ private_registry_url }}/{{ custom_images.node_exporter }}"
+        - mgr/cephadm/container_image_grafana = "{{ private_registry_url }}/{{ custom_images.grafana }}"
+        - mgr/cephadm/container_image_alertmanager = "{{ private_registry_url }}/{{ custom_images.alertmanager }}"
   hosts:
     labels:
       - name: ceph-1
@@ -127,19 +133,6 @@ ceph:
     add:
       - ceph-2
       - ceph-3
-
-ceph_image: ceph/ceph:v18
-grafana: ceph/ceph-grafana:9.4.7
-prometheus: prometheus/prometheus:v2.43.0
-alertmanager: prometheus/alertmanager:v0.25.0
-node_exporter: prometheus/node-exporter:v1.5.0
-
-custom_images:
-  - "ceph config set mgr mgr/cephadm/container_image_prometheus {{ private_registry_url }}/{{ prometheus }}"
-  - "ceph config set mgr mgr/cephadm/container_image_grafana {{ private_registry_url }}/{{ grafana }}"
-  - "ceph config set mgr mgr/cephadm/container_image_alertmanager {{ private_registry_url }}/{{ alertmanager }}"
-  - "ceph config set mgr mgr/cephadm/container_image_node_exporter {{ private_registry_url }}/{{ node_exporter }}"
-
 
 # ceph-orch-label
 ceph_node:
