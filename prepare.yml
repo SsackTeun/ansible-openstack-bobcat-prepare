@@ -1,0 +1,6 @@
+---
+- name: REPOSYNC
+  ansible.builtin.import_playbook: 01_reposync.yml
+
+- name: Container IMAGE Download
+  ansible.builtin.import_playbook: 02_user_defined_listed_image_pull.yml

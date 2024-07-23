@@ -1,0 +1,8 @@
+{% for repo in repodata %}
+[{{ repo.repoid }}]
+name={{ repo.reponame }}
+baseurl=http://{{ repository_url }}/{{ repo.repoid }}
+enabled=1
+gpgcheck=0
+
+{% endfor %}

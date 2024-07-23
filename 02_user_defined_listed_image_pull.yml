@@ -1,0 +1,7 @@
+---
+- name: 
+  hosts: prepare
+  tasks:
+    - name: Pull from User Defined Images List
+      import_role:
+        name: image-pull

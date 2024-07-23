@@ -1,0 +1,6 @@
+---
+- name: Prepare's pre-task 
+  hosts: all
+  gather_facts: false
+  roles:   
+    - ssh-keygen # ssh-keygen between localhost to prepare 

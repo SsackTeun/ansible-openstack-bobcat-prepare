@@ -1,0 +1,23 @@
+---
+# tasks file for roles/reposync
+- name: Get repository list this system
+  ansible.builtin.shell:
+    cmd: dnf repolist | awk 'NR>1 {print $1}'
+  register: result
+
+- name: Ensure reposync package
+  ansible.builtin.package:
+    name: yum-utils
+    state: present
+
+- name: reposync
+  block:
+    - ansible.builtin.shell:
+        cmd: "reposync --repo={{ item }} --download-path={{ repository_root_path }} --download-metadata"
+        creates: "{{ repository_root_path }}/{{ item }}"
+      loop: "{{ result.stdout_lines }}"
+  rescue:
+    - name: When interrupted Kill process
+      ansible.builtin.shell:
+        cmd: "ps aux | grep '[r]eposync' | awk '{print $2}' | xargs --no-run-if-empty kill -9"
+      ignore_errors: yes

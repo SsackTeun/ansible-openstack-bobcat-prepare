@@ -1,0 +1,44 @@
+---
+- name: GET Kolla-Image
+  hosts: prepare
+  become: true
+  tasks:
+    - name: Pull from docker.io/kolla/*
+      import_role:
+        name: get-kolla-images-list
+    
+    - name: Check include_tag.list Exist
+      ansible.builtin.stat:
+        path: "./roles/get-kolla-images-list/files/include_tag.list"
+      register: file_status
+      delegate_to: localhost
+
+    - name: is exists
+      debug:
+        msg: "File exist : {{ file_status.stat.exists }}"
+
+    - name: Not Exists
+      ansible.builtin.import_role:
+        name: search-org-with-tags
+      vars:
+        registry_url: "docker.io"
+        namespace: "kolla"
+        registry_api_url: "https://hub.docker.com/v2/repositories"
+        request_url: "{{ registry_api_url }}/{{ namespace }}"
+        specific_tag: "2023.2-rocky-9"
+      when: not file_status.stat.exists
+
+    - name: Lookup list File
+      set_fact:
+        image_list: "{{ lookup('file', playbook_dir + '/roles/get-kolla-images-list/files/include_tag.list').splitlines() }}" 
+      delegate_to: localhost
+      when: file_status.stat.exists
+
+    - name: Pull-Images
+      ansible.builtin.import_role:
+        name: image-pull
+      vars:
+        images: "{{ image_list }}"
+      when: file_status.stat.exists
+   
+     

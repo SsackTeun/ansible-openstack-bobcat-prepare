@@ -1,0 +1,7 @@
+---
+# tasks file for roles/image-pull
+- name: Pull Images
+  containers.podman.podman_image:
+    name: "{{ item.name | default(item) }}"
+    tag: "{{ item.tag | default(omit) }}"
+  loop: "{{ images }}"

@@ -1,0 +1,16 @@
+---
+- name: Reposync Task
+  hosts: prepare
+  tasks:
+    # Repository Download
+    - name: Install Repository /etc/yum.repos.d/external-lan-repo.repo
+      import_role:
+        name: install-repository
+
+    - name: Create Local Repository Files /etc/yum.repos.d/local.repo
+      import_role:
+        name: create-local-repository-file       
+   
+    - name: Run Reposync
+      import_role:
+        name: reposync

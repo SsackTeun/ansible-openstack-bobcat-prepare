@@ -1,0 +1,13 @@
+---
+# tasks file for roles/ssh-keygen
+- name: Generate SSH-Key
+  connection: local
+  command: "ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ''"
+  ignore_errors: yes
+  run_once: true
+
+- name: Copy SSH public key to authorized_keys
+  authorized_key:
+    user: root
+    state: present
+    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
