@@ -101,6 +101,9 @@ nexus_pip_port: "8081"
 nexus_pip_reponame: "python-pip"
 nexus_pip_trusted_host: "{{ nexus_domain }}"
 
+##=============== CHRONY SERVER============================##
+chrony_server_host: "{{ groups['chrony-server'] | first }}"
+
 ##=============== CEPH_INSTALL ============================##
 custom_images:
   grafana: ceph/ceph-grafana:9.4.7
@@ -134,12 +137,4 @@ ceph:
       - ceph-2
       - ceph-3
 
-# ceph-orch-label
-ceph_node:
-  - name: "{{ groups['ceph'][0] }}"
-    labels: mgr,mon,osd
-  - name: "{{ groups['ceph'][1] }}"
-    labels: mon,mds,nfs,osd
-  - name: "{{ groups['ceph'][2] }}"
-    labels: mon,rgw,osd
 

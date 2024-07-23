@@ -1,5 +1,5 @@
 - name: Install cephadm Package
-  hosts: "{{ groups['ceph'] | first }}"
+  hosts: "{{ groups['ceph'] }}, localhost"
   tasks:
     - name: Install cephadm Package
       ansible.builtin.package:
@@ -13,7 +13,7 @@
 
 
 - name: Bootstrap
-  hosts: "{{ groups['ceph'] | first }}"
+  hosts: localhost 
   vars:
     item: "{{ ceph.bootstrap }}"
   tasks:
