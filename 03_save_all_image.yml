@@ -7,9 +7,14 @@
 
     - name: podman_image Debug
       debug:
-        msg: "{{ hostvars[inventory_hostname]['podman_images'] }}"
+        msg: "{{ hostvars[inventory_hostname]['podman_images']['stdout_lines'] }}"
+
+    - name: Ensure Directory
+      file:
+        path: "{{ registry_image_path }}"
+        state: directory
      
     - name: podman save
       ansible.builtin.include_role:
-        name: save-images
-      loop: "{{ hostvars[inventory_hostname]['podman_images'] }}"
+        name: images-save
+      loop: "{{ hostvars[inventory_hostname]['podman_images']['stdout_lines'] }}"

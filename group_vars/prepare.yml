@@ -1,4 +1,5 @@
 ##========================= REGISTRY   ##
+registry_image_path: "{{ root_path }}/registry"
 images:
   - name: docker.io/sonatype/nexus3
     tag: latest
