@@ -7,3 +7,6 @@
 
 - name: Kolla-Image Download
   ansible.builtin.import_playbook: 02_kolla_image_pull.yml
+
+- name: Image-Save
+  ansible.builtin.import_playbook: 03_save_all_image.yml

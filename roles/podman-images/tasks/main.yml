@@ -1,0 +1,10 @@
+---
+# tasks file for roles/podman-images
+- name: List Podman images
+  shell: "podman images -n --format '{% raw %}{{.Repository}}:{{.Tag}}{% endraw %}'"
+  register: podman_images_result
+
+- name: Set fact for podman images
+  set_fact:
+    podman_images: "{{ podman_images_result }}"
+

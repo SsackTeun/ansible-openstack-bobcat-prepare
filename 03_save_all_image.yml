@@ -1,0 +1,15 @@
+- name: EXEC podman save image (all)
+  hosts: prepare
+  tasks:
+    - name: podman images
+      ansible.builtin.include_role:
+        name: podman-images
+
+    - name: podman_image Debug
+      debug:
+        msg: "{{ hostvars[inventory_hostname]['podman_images'] }}"
+     
+    - name: podman save
+      ansible.builtin.include_role:
+        name: save-images
+      loop: "{{ hostvars[inventory_hostname]['podman_images'] }}"
