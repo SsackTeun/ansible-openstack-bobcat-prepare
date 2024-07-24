@@ -1,0 +1,16 @@
+---
+- name: Verify SSH public key files existence
+  shell: "ls /tmp/*_id_rsa.pub"
+
+- name: Combine all SSH public keys into one file
+  shell: |
+    for file in /tmp/*_id_rsa.pub; do
+      cat "$file"
+      echo ""  # 빈 줄 추가
+      echo ""  # 빈 줄 추가
+    done > /tmp/all_nodes_id_rsa.pub
+- name: Remove temporary SSH key files
+  file:
+    path: "/tmp/{{ item }}_id_rsa.pub"
+    state: absent
+  with_items: "{{ groups['pre-deploy'] }}"

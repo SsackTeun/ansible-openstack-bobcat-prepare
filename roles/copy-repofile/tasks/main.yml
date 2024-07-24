@@ -1,0 +1,38 @@
+---
+# tasks file for roles/copy-repofile
+- name: Find .repo files in /etc/yum.repos.d/
+  ansible.builtin.find:
+    paths: /etc/yum.repos.d/
+    patterns: '*.repo'
+  register: repo_files
+
+- debug:
+    msg: "{{ repo_files }}"
+
+- name: dir ensure
+  ansible.builtin.file:
+    path: "/etc/yum.repos.d/old_repos"
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+  become: yes
+
+- name: Copy .repo files to old_repos directory
+  ansible.builtin.command: cp "{{ item.path }}" /etc/yum.repos.d/old_repos/
+  become: yes
+  loop: "{{ repo_files.files }}"
+  when: repo_files.matched > 0
+
+- name: Remove existing repo files from /etc/yum.repos.d/
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ repo_files.files }}"
+  when: repo_files.files | length > 0
+  become: yes
+
+- name: copy
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/roles/create-repofile/files/local.repo"
+    dest: "/etc/yum.repos.d/local.repo"

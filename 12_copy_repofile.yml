@@ -1,0 +1,6 @@
+- name: Copy RepoFile => /etc/yum.repos.d/local.repo
+  hosts: pre-deploy
+  tasks:
+    - name: Copy RepoFile Run
+      import_role:
+        name: copy-repofile

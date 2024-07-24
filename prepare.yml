@@ -10,3 +10,9 @@
 
 - name: Image-Save
   ansible.builtin.import_playbook: 03_save_all_image.yml
+
+- name: Python Package Save
+  ansible.builtin.import_playbook: 04_python_package.yml
+
+- name: Create_local.repo file
+  ansible.builtin.import_playbook: 05_create_repofile.yml

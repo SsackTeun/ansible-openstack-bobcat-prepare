@@ -9,7 +9,7 @@
 
     - name: Create Local Repository Files /etc/yum.repos.d/local.repo
       import_role:
-        name: create-local-repository-file       
+        name: create-repofile 
    
     - name: Run Reposync
       import_role:

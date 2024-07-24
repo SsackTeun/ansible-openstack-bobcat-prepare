@@ -1,0 +1,8 @@
+---
+- name: Collect SSH public key
+  shell: cat ~/.ssh/id_rsa.pub
+  register: ssh_pub_keys
+
+- name: Copy SSH public key to control node
+  local_action: copy content="{{ ssh_pub_keys.stdout }}" dest="/tmp/{{ inventory_hostname }}_id_rsa.pub"
+

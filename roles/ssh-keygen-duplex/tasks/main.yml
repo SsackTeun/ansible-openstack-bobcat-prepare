@@ -1,0 +1,14 @@
+---
+# tasks file for roles/ssh-keygen-duplex
+- name: Generate SSH key and copy to control node
+  import_tasks: generate_key.yml
+
+- name: Collect SSH public keys from all nodes
+  import_tasks: collect_key.yml
+
+- name: Integrate SSH public keys on control node
+  import_tasks: integrate_key.yml
+  delegate_to: localhost
+- name: Deploy integrated SSH keys to all nodes
+  import_tasks: deploy_key.yml
+

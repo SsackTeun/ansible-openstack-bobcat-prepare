@@ -1,0 +1,5 @@
+
+---
+- name: REPOSYNC
+  ansible.builtin.import_playbook: 01_reposync.yml
+

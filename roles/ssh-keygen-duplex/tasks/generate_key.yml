@@ -1,0 +1,10 @@
+---
+- name: Check if SSH key exists
+  stat:
+    path: "~/.ssh/id_rsa"
+  register: ssh_key_exists
+
+- name: Generate SSH key if it does not exist
+  command: "ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ''"
+  when: not ssh_key_exists.stat.exists
+

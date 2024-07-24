@@ -1,0 +1,7 @@
+---
+- name: SSH Key Management on Internal Hosts
+  hosts: pre-deploy
+  gather_facts: false
+  roles:
+    - ssh-keygen-duplex
+

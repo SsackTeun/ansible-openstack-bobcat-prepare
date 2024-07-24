@@ -1,6 +1,6 @@
 ---
-# tasks file for roles/create-local-repository-file
-- name: dnf repolist | Extract repo_id, reponame
+# tasks file for roles/create-repofile
+- name: dnf repolist 에서 REPO_ID, REPO_NAME 추출
   command: dnf repolist
   register: yum_repolist_output
 
@@ -15,6 +15,6 @@
 
 - name: Create YUM repository file
   template:
-    src: create_repository_file.j2
+    src: create_repofile.j2
     dest: "{{ role_path }}/files/local.repo"
   delegate_to: localhost

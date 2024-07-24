@@ -1,0 +1,7 @@
+---
+- name: Install Python Package
+  hosts: prepare
+  tasks:
+    - name: Python Package Download Local Dir
+      import_role:
+        name: python-package-save

@@ -1,0 +1,26 @@
+---
+# tasks file for roles/python-package-save
+- name: Ensure python3 is installed
+  ansible.builtin.package:
+    name: python3
+    state: present
+
+- name: Ensure pip3 is installed
+  ansible.builtin.package:
+    name: python3-pip
+    state: present
+
+- name: Create directory for downloaded packages
+  ansible.builtin.file:
+    path: "{{ python_package_root }}"
+    state: directory
+
+- name: Copy requirements file to download node
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/requirements.txt"
+    dest: "{{ python_package_root }}/requirements.txt"
+
+- name: Download python packages
+  ansible.builtin.command:
+    cmd: "{{ ansible_facts['python']['executable'] }} -m pip download -r {{ python_package_root }}/requirements.txt -d {{ python_package_root }}"
+  when: ansible_facts['python'] is defined
