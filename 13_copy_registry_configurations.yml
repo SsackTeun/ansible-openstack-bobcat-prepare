@@ -1,0 +1,7 @@
+
+- name: Copy registries.conf > /etc/containers/registries.conf & auth htpasswd > /etc/containers/auth/htpasswd
+  hosts: pre-deploy
+  tasks:
+    - name: Copy registry configurations
+      import_role:
+        name: copy-registry-configurations

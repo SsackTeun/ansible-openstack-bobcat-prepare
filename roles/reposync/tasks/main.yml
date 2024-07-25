@@ -13,8 +13,8 @@
 - name: reposync
   block:
     - ansible.builtin.shell:
-        cmd: "reposync --repo={{ item }} --download-path={{ repository_root_path }} --download-metadata"
-        creates: "{{ repository_root_path }}/{{ item }}"
+        cmd: "reposync --repo={{ item }} --download-path={{ repository_reposync_target }} --download-metadata"
+        creates: "{{ repository_reposync_target }}/{{ item }}"
       loop: "{{ result.stdout_lines }}"
   rescue:
     - name: When interrupted Kill process

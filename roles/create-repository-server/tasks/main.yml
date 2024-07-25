@@ -1,0 +1,55 @@
+---
+# tasks file for roles/create-repository-server
+- name: Load Nginx Container Image from .tar file
+  find:
+    paths: "{{ registry_image_path }}"
+    patterns: "*nginx*.tar"
+    recurse: yes
+  register: nginx_tarfile
+
+- name: Found or Not Found
+  debug:
+    msg: "{{ nginx_tarfile }}"
+
+- name: Image Load
+  containers.podman.podman_load:
+    input: "{{ item }}"
+  loop: "{{ nginx_tarfile.files | map(attribute='path') }}"
+
+- name: Create Nginx Conf
+  ansible.builtin.template:
+    src: nginx.conf.j2
+    dest: /etc/nginx.conf
+    mode: '0644' 
+
+- name: nginx run
+  containers.podman.podman_container:
+    name: nginx
+    image: "docker.io/nginx"
+    state: started
+    recreate: true
+    ports:
+      - "{{ registry_nginx_server_port }}" # 80:80
+    hostname: "{{ registry_nginx_hostname }}"
+    volumes:
+      - "{{ registry_nginx_mount_volume }}:/repository:ro" # repository 경로 마운트
+      - "{{ registry_nginx_conf_path }}:/etc/nginx/nginx.conf" # nginx conf i경로 마운트
+    restart_policy: unless-stopped
+    interactive: false # option -i
+    tty: false # option -t
+
+- name: SELINUX Config
+  ansible.builtin.shell:
+    cmd: "chcon -R -t httpd_sys_content_t {{ registry_nginx_mount_volume }}"
+
+- name: SELINUX Permissive
+  selinux:
+    policy: targeted
+    state: permissive
+
+- name: Ensure SELinux config
+  lineinfile:
+    path: /etc/selinux/config
+    regexp: '^SELINUX='
+    line: 'SELINUX=permissive'
+    state: present

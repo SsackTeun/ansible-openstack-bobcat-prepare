@@ -1,5 +1,16 @@
 
 ---
-- name: REPOSYNC
-  ansible.builtin.import_playbook: 01_reposync.yml
+- name: Distribute all nodes public key to all nodes
+  ansible.builtin.import_playbook: ssh-keygen-duplex.yml
 
+- name: Copy local.repo file all nodes /etc/yum.repos.d/local.repo 
+  ansible.builtin.import_playbook: 11_copy_repofile.yml 
+
+- name: Copy local.repo file all nodes /etc/hosts 
+  ansible.builtin.import_playbook: 12_copy_hostsfile.yml
+
+- name: Create_Repository_Server with Nginx Container
+  ansible.builtin.import_playbook: 21_create_repository_server.yml
+
+- name: Copy registries.conf > /etc/containers/registries.conf  
+  ansible.builtin.import_playbook: 13_copy_registry_configurations.yml

@@ -1,0 +1,7 @@
+
+- name: Copy RepoFile => /etc/hosts
+  hosts: pre-deploy
+  tasks:
+    - name: Copy RepoFile Run
+      import_role:
+        name: copy-hostsfile

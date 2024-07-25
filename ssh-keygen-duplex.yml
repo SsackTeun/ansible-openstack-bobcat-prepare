@@ -1,5 +1,5 @@
 ---
-- name: SSH Key Management on Internal Hosts
+- name: Distribute all public SSH keys to all nodes
   hosts: pre-deploy
   gather_facts: false
   roles:

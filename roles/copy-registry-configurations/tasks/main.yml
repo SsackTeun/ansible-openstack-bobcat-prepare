@@ -1,0 +1,22 @@
+---
+# tasks file for roles/copy-registry-configurations
+- name: COPY template registries.conf.j2 
+  ansible.builtin.template:
+    src: registries.conf.j2
+    dest: /etc/containers/registries.conf
+
+- name: Ensure httpd-tools Package
+  ansible.builtin.package:
+    name: httpd-tools
+    state: present
+
+- name: Ensure Directory and Create htpasswd Path
+  ansible.builtin.file:
+    path: "{{ htpasswd_path }}"
+    state: directory
+    mode: '0755'
+
+- name: Create htpasswd
+  ansible.builtin.shell:
+    cmd: "htpasswd -Bbn {{ htpasswd_username }} {{ htpasswd_password }}  > {{ htpasswd_path }}/htpasswd"
+

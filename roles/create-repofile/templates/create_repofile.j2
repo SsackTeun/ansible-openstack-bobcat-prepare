@@ -1,7 +1,7 @@
 {% for repo in repodata %}
 [{{ repo.repoid }}]
 name={{ repo.reponame }}
-baseurl={{ repository_baseurl }}/{{ repo.repoid }}
+baseurl={{ repository_local_baseurl }}/{{ repo.repoid }}
 enabled=1
 gpgcheck=0
 

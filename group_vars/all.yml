@@ -1,1 +1,149 @@
 root_path: /openstack-files
+
+####################################################################
+# REPOSITORY CONFIGURATION
+####################################################################
+# This section defines the configuration settings for repository management,
+# including the paths and base URLs for local and public repositories.
+
+# Root Path for Reposync Target Directory
+repository_reposync_target: "{{ root_path }}/repository"
+# Example: /openstack-files/repository
+
+# Base URL for Local Repository
+repository_local_baseurl: http://repository
+# Example: http://repository
+
+# Additional Repositories 
+# Define additional repositories to be added to the system.
+# Example: Create > /etc/yum.repos.d/external-lan-repo
+repositories:
+  - name: baseos
+    description: Rocky Linux $releasever - BaseOS
+    mirrorlist: https://mirrors.rockylinux.org/mirrorlist?arch=$basearch&repo=BaseOS-$releasever$rltype
+    file: external-lan-repo
+    gpgcheck: false
+    enabled: true
+
+  - name: appstream
+    description: Rocky Linux $releasever - AppStream
+    mirrorlist: https://mirrors.rockylinux.org/mirrorlist?arch=$basearch&repo=AppStream-$releasever$rltype
+    file: external-lan-repo
+    gpgcheck: false
+    enabled: true
+
+  - name: extras
+    description: Rocky Linux $releasever - Extras
+    mirrorlist: https://mirrors.rockylinux.org/mirrorlist?arch=$basearch&repo=extras-$releasever$rltype
+    file: external-lan-repo
+    gpgcheck: false
+    enabled: true
+
+  - name: epel
+    description: Extra Packages for Enterprise Linux $releasever - $basearch
+    metalink: https://mirrors.fedoraproject.org/metalink?repo=epel-$releasever&arch=$basearch&infra=$infra&content=$contentdir
+    file: external-lan-repo
+    gpgcheck: false
+    enabled: true
+
+  - name: centos-ceph-reef
+    description: CentOS-$stream - Ceph Reef
+    metalink: https://mirrors.centos.org/metalink?repo=centos-storage-sig-ceph-reef-9-stream&arch=$basearch
+    gpgcheck: false
+    file: external-lan-repo
+    enabled: true
+
+  - name: centos-rabbitmq-38
+    description: CentOS-9 - RabbitMQ 38
+    metalink: https://mirrors.centos.org/metalink?repo=centos-messaging-sig-rabbitmq-38-$releasever-stream&arch=$basearch&protocol=https,http
+    file: external-lan-repo
+    gpgcheck: false
+    enabled: true
+
+  - name: centos-nfv-openvswitch
+    description: NFV SIG RHEL $releasever - NFV OpenvSwitch
+    metalink: https://mirrors.centos.org/metalink?repo=centos-nfv-sig-openvswitch-common-$releasever&arch=$basearch&protocol=https,http
+    file: external-lan-repo
+    gpgcheck: false
+    enabled: true
+
+  - name: centos-openstack-bobcat
+    description: CentOS-$releasever - OpenStack bobcat
+    metalink: https://mirrors.centos.org/metalink?repo=centos-cloud-sig-openstack-bobcat-$releasever-stream&arch=$basearch&protocol=https,http
+    file: external-lan-repo
+    gpgcheck: false
+    enabled: true
+
+  - name: ceph
+    description: Ceph $basearch
+    baseurl: https://download.ceph.com/rpm-reef/el9/$basearch
+    file: external-lan-repo
+    enabled: true
+    gpgcheck: false
+
+  - name: ceph-noarch
+    description: Ceph noarch
+    baseurl: https://download.ceph.com/rpm-reef/el9/noarch
+    file: external-lan-repo
+    enabled: true
+    gpgcheck: false
+
+  - name: ceph-srpms
+    description: Ceph SRPMS
+    baseurl: https://download.ceph.com/rpm-reef/el9/SRPMS
+    file: external-lan-repo
+    enabled: true
+    gpgcheck: false
+
+
+####################################################################
+# REGISTRY PREPARE : Download and Save Neccessary Container Image
+####################################################################
+registry_image_path: "{{ root_path }}/registry"
+
+images:
+  - name: docker.io/sonatype/nexus3
+    tag: latest
+  - name: docker.io/library/nginx
+    tag: 1.25.5
+  - name: docker.io/registry
+    tag: 2.8.3
+  - name: quay.io/ceph/ceph
+    tag: v18
+  - name: quay.io/ceph/ceph-grafana
+    tag: 9.4.7
+  - name: quay.io/prometheus/prometheus
+    tag: v2.43.0
+  - name: quay.io/prometheus/alertmanager
+    tag: v0.25.0
+  - name: quay.io/prometheus/node-exporter
+    tag: v1.5.0
+
+####################################################################
+# REGISTRY CONFIG
+####################################################################
+## Create =>  /etc/containers/registries.conf  
+registry_url: "myregistry:5000"
+registry_insecure: true
+
+htpasswd_path: /etc/containers/auth
+htpasswd_username: admin
+htpasswd_password: admin
+
+####################################################################
+# PYTHON PACKAGE
+####################################################################
+python_package_root: "{{ root_path }}/pip-packages"
+
+####################################################################
+# REPOSITORY_NGINX_CONTINAER_CONFIG 
+####################################################################
+registry_nginx_image_path: "{{ root_path }}/registry"
+registry_nginx_server_port: "80:80"
+registry_nginx_hostname: "root"
+registry_nginx_conf_path: /etc/nginx.conf
+registry_nginx_mount_volume: "{{ repository_reposync_target }}"
+registry_nginx_container_volume: /repository
+
+
+

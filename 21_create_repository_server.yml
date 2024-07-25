@@ -1,0 +1,6 @@
+- name: Create-Repository
+  hosts: repository
+  tasks:
+    - name: nginx fileload
+      import_role:
+        name: create-repository-server 
