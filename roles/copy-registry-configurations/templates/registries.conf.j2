@@ -4,4 +4,4 @@ short-name-mode = "enforcing"
 [[registry]]
 prefix = "{{ registry_url }}"
 location = "{{ registry_url }}"
-insecure = {{ registry_insecure }}
+insecure = {{ registry_insecure | lower }}

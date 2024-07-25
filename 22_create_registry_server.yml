@@ -1,0 +1,10 @@
+- name: Create-Registry-Server
+  hosts: repository
+  tasks:
+    - name: Run Registry Server Container
+      import_role:
+        name: create-registry-server 
+
+    - name: Load All Images
+      import_role:
+        name: load-all-images

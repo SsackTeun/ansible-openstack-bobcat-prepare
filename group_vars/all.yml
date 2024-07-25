@@ -1,5 +1,7 @@
 root_path: /openstack-files
-
+repository_path: "{{ root_path }}/repository"
+registry_path: "{{ root_path }}/registry"
+pip_package_path: "{{ root_path }}/pip-packages"
 ####################################################################
 # REPOSITORY CONFIGURATION
 ####################################################################
@@ -7,7 +9,7 @@ root_path: /openstack-files
 # including the paths and base URLs for local and public repositories.
 
 # Root Path for Reposync Target Directory
-repository_reposync_target: "{{ root_path }}/repository"
+repository_reposync_target: "{{ repository_path }}"
 # Example: /openstack-files/repository
 
 # Base URL for Local Repository
@@ -99,7 +101,7 @@ repositories:
 ####################################################################
 # REGISTRY PREPARE : Download and Save Neccessary Container Image
 ####################################################################
-registry_image_path: "{{ root_path }}/registry"
+registry_image_path: "{{ registry_path }}"
 
 images:
   - name: docker.io/sonatype/nexus3
@@ -133,17 +135,24 @@ htpasswd_password: admin
 ####################################################################
 # PYTHON PACKAGE
 ####################################################################
-python_package_root: "{{ root_path }}/pip-packages"
+python_package_root: "{{ pip_package_path }}"
 
 ####################################################################
 # REPOSITORY_NGINX_CONTINAER_CONFIG 
 ####################################################################
-registry_nginx_image_path: "{{ root_path }}/registry"
+registry_nginx_image_path: "{{ registry_path }}"
 registry_nginx_server_port: "80:80"
 registry_nginx_hostname: "root"
 registry_nginx_conf_path: /etc/nginx.conf
-registry_nginx_mount_volume: "{{ repository_reposync_target }}"
+registry_nginx_mount_volume: "{{ repository_path }}"
 registry_nginx_container_volume: /repository
 
 
-
+####################################################################
+# REGISTRY_SERVER_CONTINAER_CONFIG 
+####################################################################
+registry_server_image_path: "{{ registry_path }}"
+registry_server_port: 5000:5000
+registry_server_url: "{{ registry_url }}"
+registry_server_username: admin
+registry_server_password: admin 

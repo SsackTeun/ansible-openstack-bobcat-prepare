@@ -1,0 +1,41 @@
+---
+# tasks file for roles/create-registry-server
+- name: find image files
+  find:
+    paths: "{{ registry_server_image_path }}"
+    patterns: "*registry*.tar"
+    recurse: yes
+  register: image_files
+
+- name: find files result
+  debug:
+    msg: "{{ image_files.files | map(attribute='path') | list }}"
+
+- name: load image
+  containers.podman.podman_load:
+      input: "{{ item }}"
+  loop: "{{ image_files.files |  map(attribute='path') |  list }}"
+
+- name: Check if registry container is already running
+  containers.podman.podman_container_info:
+    name: registry
+  register: registry_info
+  ignore_errors: yes
+
+- name: Run Registry Container
+  containers.podman.podman_container:
+    name: registry
+    image: "registry:2"
+    state: started
+    recreate: true
+    hostname: registry
+    publish:
+      - "{{ registry_server_port }}"
+    volumes:
+      - "{{ htpasswd_path }}:/auth"
+    env:
+      REGISTRY_AUTH: "htpasswd"
+      REGISTRY_AUTH_HTPASSWD_REALM: "Registry Realm"
+      REGISTRY_AUTH_HTPASSWD_PATH: "/auth/htpasswd"
+    restart_policy: unless-stopped
+  when: registry_info.containers is not defined or registry_info.containers | length == 0

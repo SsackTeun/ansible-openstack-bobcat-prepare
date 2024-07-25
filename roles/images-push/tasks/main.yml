@@ -1,0 +1,29 @@
+---
+# tasks file for roles/images-push
+- name: Login Private Registry
+  containers.podman.podman_login:
+    username: "{{ registry_server_username }}"
+    password: "{{ registry_server_password }}"
+    registry: "{{ registry_server_url }}"
+    tlsverify: false
+
+- name: Get list of Podman images
+  command: podman images --format "{{ '{{.Repository}}:{{.Tag}}' }}"
+  register: podman_images
+
+- name: Tag docker.io and quay.io images to myregistry:5000
+  containers.podman.podman_tag:
+    image: "{{ item }}"
+    target_names: "{{ registry_server_url }}/{{ item | regex_replace('^docker.io/', '') | regex_replace('^quay.io/', '') }}"
+  with_items:
+    - "{{ podman_images.stdout_lines | select('match', '^docker.io') | list }}"
+    - "{{ podman_images.stdout_lines | select('match', '^quay.io') | list }}"
+
+- name: Get list of Podman images
+  command: podman images --format "{{ '{{.Repository}}:{{.Tag}}' }}"
+  register: podman_images
+
+- name: Push images to myregistry:5000
+  shell: podman push {{ item }}
+  with_items:
+    - "{{ podman_images.stdout_lines | select('match', registry_server_url ) | list }}"

@@ -1,4 +1,6 @@
 ---
-- name: Running in Repository
-  ansible.builtin.import_playbook: 21_create_repository_server 
+- name: Running Repository
+  ansible.builtin.import_playbook: 21_create_repository_server.yml 
 
+- name: Running Registry
+  ansible.builtin.import_playbook: 22_create_registry_server.yml 

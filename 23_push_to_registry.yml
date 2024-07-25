@@ -1,0 +1,6 @@
+- name: Create-Registry-Server
+  hosts: repository
+  tasks:
+    - name: Push to Registry
+      import_role:
+        name: images-push
