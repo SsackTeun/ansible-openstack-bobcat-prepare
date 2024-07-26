@@ -186,3 +186,38 @@ package_file_path: "{{ pip_package_path }}"
 ####################################################################
 nexus_pip_url: "{{ nexus_server_pypi_url }}"
 nexus_pip_trusted_host: "{{ nexus_server_pypi_domain }}"
+
+####################################################################
+# ceph config
+####################################################################
+custom_images:
+  grafana: ceph/ceph-grafana:9.4.7
+  prometheus: prometheus/prometheus:v2.43.0
+  alertmanager: prometheus/alertmanager:v0.25.0
+  node_exporter: prometheus/node-exporter:v1.5.0
+
+ceph:
+  bootstrap:
+    registry:
+      url: "myregistry:5000"
+      username: "admin"
+      password: "admin"
+      image: "myregistry:5000/ceph/ceph:v18"
+    mon_ip: "10.130.39.21"
+    initial_conf:
+      images:
+        - mgr/cephadm/container_image_prometheus = "{{ registry_url }}/{{ custom_images.prometheus }}"
+        - mgr/cephadm/container_image_node_exporter = "{{ registry_url }}/{{ custom_images.node_exporter }}"
+        - mgr/cephadm/container_image_grafana = "{{ registry_url }}/{{ custom_images.grafana }}"
+        - mgr/cephadm/container_image_alertmanager = "{{ registry_url }}/{{ custom_images.alertmanager }}"
+  hosts:
+    labels:
+      - name: ceph-1
+        label: mgr,mon,osd
+      - name: ceph-2
+        label: mon,mds,nfs,osd
+      - name: ceph-3
+        label: mon,rgw,osd
+    add:
+      - ceph-2
+      - ceph-3

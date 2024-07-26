@@ -8,7 +8,6 @@
     - name: Configure PyPi Client
       import_role:
         name: configure-pypi-client
-      delegate_to: localhost
 
     - name: Find all files in the remote directory
       find:

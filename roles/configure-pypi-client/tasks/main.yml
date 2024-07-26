@@ -4,6 +4,7 @@
   template:
     src: pypirc.j2
     dest: "/root/.pypirc"
+  delegate_to: localhost
 
 - name: create-pip.conf files with template
   template:

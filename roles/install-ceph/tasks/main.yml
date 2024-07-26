@@ -1,0 +1,44 @@
+---
+# tasks file for roles/install-ceph
+- name: Install cephadm package
+  package:
+    name: cephadm
+    state: present
+
+- name: Install ceph-common package
+  package:
+    name: ceph-common
+    state: present
+
+- name: Ensure Dir
+  ansible.builtin.file:
+    path: /etc/ceph
+    state: directory
+  delegate_to: localhost
+
+- name: initial-ceph.conf < image_config
+  ansible.builtin.copy:
+    content: |
+      [mgr]
+      {% for image in ceph.bootstrap.initial_conf.images %}
+      {{ image }}
+      {% endfor %}
+    dest: /etc/ceph/initial-ceph.conf
+  delegate_to: localhost
+
+- name: cephadm bootstrap --mon-ip {{ item.mon_ip }}
+  ansible.builtin.command:
+    cephadm --image {{ item.registry.image }} \
+            bootstrap --mon-ip {{ item.mon_ip }} \
+            --config /etc/ceph/initial-ceph.conf \
+            --registry-url {{ item.registry.url }} \
+            --registry-username {{ item.registry.username }} \
+            --registry-password {{ item.registry.password }} \
+            --allow-overwrite
+  register: bootstrap_result
+  delegate_to: localhost
+
+- name: debug
+  debug:
+    msg: "{{ bootstrap_result }}"
+  delegate_to: localhost

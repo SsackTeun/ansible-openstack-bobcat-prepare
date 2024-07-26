@@ -1,0 +1,18 @@
+- name: Install Ceph
+  hosts: ceph
+  tasks:
+    - name: Install cephadm package
+      package:
+        name: cephadm
+        state: present
+    
+    - name: Install ceph-common package
+      package:
+        name: ceph-common
+        state: present
+
+    - name: Install Cephadm
+      import_role:
+        name: install-ceph 
+      vars:
+        item: "{{ ceph.bootstrap }}"
