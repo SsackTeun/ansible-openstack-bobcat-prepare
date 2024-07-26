@@ -1,18 +1,108 @@
-- name: Install Ceph
-  hosts: ceph
+- name: Install cephadm Package
+  hosts: "{{ groups['ceph'] }}"
   tasks:
-    - name: Install cephadm package
-      package:
+    - name: Install cephadm Package
+      ansible.builtin.package:
         name: cephadm
         state: present
-    
-    - name: Install ceph-common package
-      package:
+
+    - name: Install ceph-common Package
+      ansible.builtin.package:
         name: ceph-common
         state: present
 
-    - name: Install Cephadm
-      import_role:
-        name: install-ceph 
-      vars:
-        item: "{{ ceph.bootstrap }}"
+
+- name: Bootstrap
+  hosts: "{{ groups['ceph'] | first }}"
+  vars:
+    item: "{{ ceph.bootstrap }}"
+  tasks:
+    - name: Ensure Dir
+      ansible.builtin.file:
+        path: /etc/ceph
+        state: directory
+
+    - name: initial-ceph.conf < image_config
+      ansible.builtin.copy:
+        content: |
+          [mgr]
+          {% for image in ceph.bootstrap.initial_conf.images %}
+          {{ image }}
+          {% endfor %}
+        dest: /etc/ceph/initial-ceph.conf
+
+    - name: cephadm bootstrap --mon-ip {{ item.mon_ip }}
+      ansible.builtin.command:
+        cephadm --image {{ item.registry.image }} \
+                bootstrap --mon-ip {{ item.mon_ip }} \
+                --config /etc/ceph/initial-ceph.conf \
+                --registry-url {{ item.registry.url }} \
+                --registry-username {{ item.registry.username }} \
+                --registry-password {{ item.registry.password }} \
+                --allow-overwrite
+      register: bootstrap_result
+
+    - name: debug
+      debug:
+        msg: "{{ bootstrap_result }}"
+
+- name: 키 확인
+  hosts: "{{ groups['ceph'] | first }}"
+  vars:
+    hosts: "{{ ceph.hosts }}"
+  become: yes
+  tasks:
+    - name: copy cephadm pub-key to except admin-node
+      ansible.builtin.shell: |
+        ceph cephadm get-pub-key > /root/ceph.pub
+      run_once: true
+
+    - name: Copy cephadm pub-key to Ansible control node
+      fetch:
+        src: /root/ceph.pub
+        dest: /tmp/
+        flat: yes
+      run_once: true
+
+- name: 키 복사
+  hosts: ceph
+  gather_facts: false
+  tasks:
+    - name: Copy cephadm pub-key to hosts
+      authorized_key:
+        user: root
+        state: present
+        key: "{{ lookup('file', '/tmp/ceph.pub') }}"
+      when: inventory_hostname != groups['ceph'] | first
+
+- name: cephadd-host
+  hosts: "{{ groups['ceph'] | first }}"
+  vars:
+    hosts: "{{ ceph.hosts }}"
+  become: yes
+  tasks:
+    - name: ceph orch host add
+      ansible.builtin.command: >
+        ceph orch host add {{ item }}
+      loop: "{{ hosts.add }}"
+      register: ceph_orch_host_add_result
+
+    - name: debug
+      debug:
+        msg: "{{ ceph_orch_host_add_result }}"
+
+- name: ceph orch host label add
+  hosts: "{{ groups['ceph'] | first }}"
+  vars:
+    hosts: "{{ ceph.hosts }}"
+  become: yes
+  tasks:
+    - name: ceph orch host add
+      ansible.builtin.command: >
+        ceph orch host label add {{ item.name }} {{ item.label }}
+      loop: "{{ hosts.labels }}"
+      register: ceph_orch_host_label_add_result
+
+    - name: debug
+      debug:
+        msg: "{{ ceph_orch_host_label_add_result }}"

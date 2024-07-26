@@ -36,7 +36,7 @@
             --registry-password {{ item.registry.password }} \
             --allow-overwrite
   register: bootstrap_result
-  delegate_to: localhost
+  delegate_to: "{{ groups['ceph'] | first }}"
 
 - name: debug
   debug:

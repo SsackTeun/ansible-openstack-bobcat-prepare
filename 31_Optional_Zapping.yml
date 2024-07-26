@@ -1,0 +1,14 @@
+- name: Cephadm Purge
+  hosts: "{{ groups['ceph'] | first }}"
+  vars:
+    item: "{{ ceph.bootstrap }}"
+  tasks:
+    - name: List OSD devices
+      ansible.builtin.shell: |
+        ceph-volume lvm list --format json
+      register: lvm_list
+      changed_when: false
+
+    - name: Debug OSD devices list
+      ansible.builtin.debug:
+        msg: "{{ lvm_list }}"
