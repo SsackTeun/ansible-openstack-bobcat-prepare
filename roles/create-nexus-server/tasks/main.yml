@@ -1,0 +1,44 @@
+---
+# tasks file for roles/create-nexus-server
+- name: find image files (.tar file)
+  find:
+    paths: "{{ nexus_server_image_path }}/"
+    patterns: "*nexus3*.tar"
+    recurse: yes
+  register: image_files
+
+- debug:
+    msg: "{{ image_files }}"
+
+- name: image load
+  containers.podman.podman_load:
+    input: "{{ item }}"
+  loop: "{{ image_files.files | map(attribute='path') | list }}"
+
+- name: create_dir
+  file:
+    path: "{{ nexus_server_data_path }}"
+    state: directory
+    mode: "0757"
+
+- name: create_dir
+  file:
+    path: "{{ nexus_server_sonatype_work_path }}"
+    state: directory
+    mode: "0757"
+
+- name: nexus run
+  containers.podman.podman_container:
+    name: pip-repository
+    image: "docker.io/sonatype/nexus3"
+    state: started
+    recreate: true
+    ports:
+      - "{{ nexus_server_port }}" # 80:80
+    hostname: "{{ nexus_server_hostname }}"
+    volumes:
+      - "{{ nexus_server_data_path }}:/nexus-data:Z"
+      - "{{ nexus_server_sonatype_work_path }}:/sonatype-work:Z"
+    restart_policy: unless-stopped
+    interactive: false # option -i
+    tty: false # option -t

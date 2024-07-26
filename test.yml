@@ -1,0 +1,31 @@
+---
+- name: Change Nexus Repository Manager admin password
+  hosts: localhost
+  vars_files:
+    - vars.yml
+  tasks:
+    - name: Read initial admin password
+      command: cat {{ initial_admin_password_file }}
+      register: initial_password_result
+
+    - name: Set new admin password
+      uri:
+        url: "{{ nexus_url }}/service/rest/v1/security/users/admin/change-password"
+        method: PUT
+        user: admin
+        password: "{{ initial_password_result.stdout }}"
+        force_basic_auth: yes
+        headers:
+          Content-Type: "application/json"
+        body: >
+          {
+            "password": "{{ new_admin_password }}"
+          }
+        body_format: json
+        status_code: 204
+      register: change_password_result
+
+    - name: Debug password change response
+      debug:
+        var: change_password_result
+

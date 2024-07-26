@@ -2,6 +2,7 @@ root_path: /openstack-files
 repository_path: "{{ root_path }}/repository"
 registry_path: "{{ root_path }}/registry"
 pip_package_path: "{{ root_path }}/pip-packages"
+
 ####################################################################
 # REPOSITORY CONFIGURATION
 ####################################################################
@@ -156,3 +157,32 @@ registry_server_port: 5000:5000
 registry_server_url: "{{ registry_url }}"
 registry_server_username: admin
 registry_server_password: admin 
+
+####################################################################
+# SonaType Nexus 
+####################################################################
+nexus_server_image_path: "{{ registry_path }}"
+nexus_server_data_path: "{{ root_path }}/nexus3/nexus-data"
+nexus_server_sonatype_work_path: "{{ root_path }}/nexus3/sonatype-work"
+nexus_server_hostname: "root"
+nexus_server_port: "8081:8081"
+
+nexus_server_pypi_domain: "repository"
+nexus_server_repository: "python-pip"
+nexus_server_pypi_url: "http://{{ nexus_server_pypi_domain }}:{{ nexus_server_pypi_port }}/repository/{{ nexus_server_repository }}"
+nexus_server_pypi_port: "8081"
+nexus_server_pypi_reponame: "python-pip"
+nexus_server_pypi_trusted_host: "{{ nexus_server_pypi_domain }}"
+nexus_server_username: "admin"
+nexus_server_password: "admin"
+
+####################################################################
+# .pypirc, twine 
+####################################################################
+package_file_path: "{{ pip_package_path }}"
+
+####################################################################
+# pip.conf setting
+####################################################################
+nexus_pip_url: "{{ nexus_server_pypi_url }}"
+nexus_pip_trusted_host: "{{ nexus_server_pypi_domain }}"

@@ -1,0 +1,6 @@
+---
+# tasks file for roles/twine-upload-pypi-package
+- name: Upload packages using twine
+  ansible.builtin.command:
+    cmd: twine upload /tmp/pip-packages/*
+  

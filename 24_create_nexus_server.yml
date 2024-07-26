@@ -1,0 +1,30 @@
+- name: Create-Nexus-Server
+  hosts: repository
+  tasks:
+    - name: Create Nexus Server
+      import_role:
+        name: create-nexus-server
+
+    - name: Configure PyPi Client
+      import_role:
+        name: configure-pypi-client
+      delegate_to: localhost
+
+    - name: Find all files in the remote directory
+      find:
+        paths: "{{ package_file_path }}"
+        recurse: yes
+        file_type: file
+      register: files
+
+    - name: Fetch all files from the remote directory
+      fetch:
+        src: "{{ item.path }}"
+        dest: "/tmp/pip-packages/"
+        flat: yes
+      with_items: "{{ files.files }}"
+
+    - name: Upload File
+      import_role:
+        name: twine-upload-pypi-package
+      delegate_to: localhost

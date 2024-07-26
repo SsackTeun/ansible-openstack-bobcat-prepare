@@ -1,0 +1,11 @@
+---
+# tasks file for roles/configure-pypi-client
+- name: create-.pypirc files with template
+  template:
+    src: pypirc.j2
+    dest: "/root/.pypirc"
+
+- name: create-pip.conf files with template
+  template:
+    src: pip.conf.j2
+    dest: /etc/pip.conf 

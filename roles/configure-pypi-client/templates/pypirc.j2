@@ -1,0 +1,8 @@
+[distutils]
+index-servers = 
+  pypi
+
+[pypi]
+repository: {{ nexus_server_pypi_url }}/
+username: {{ nexus_server_username }}
+password: {{ nexus_server_password }}
