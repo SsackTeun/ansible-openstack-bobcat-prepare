@@ -1,0 +1,4 @@
+[global]
+index=http://repository:8081/repository/python-pip/
+index-url=http://repository:8081/repository/python-pip/simple
+trusted-host=repository

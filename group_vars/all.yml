@@ -138,6 +138,27 @@ htpasswd_password: admin
 ####################################################################
 python_package_root: "{{ pip_package_path }}"
 
+
+##================= KOLLA-ANSIBLE INSTALL ==================##
+# 현재 디렉토리의 전체 경로를 가져옵니다.
+current_directory: "{{ lookup('pipe', 'pwd') }}"
+local_root_path:  "/{{ current_directory.split('/') | select('match', '[^ ]') | first }}"
+venv_path: "{{ local_root_path }}/venv"
+copy_kolla_config: "{{ venv_path }}/share/kolla-ansible/etc_examples/kolla"
+copy_inventory_path: "{{ venv_path }}/share/kolla-ansible/ansible/inventory/multinode"
+dest_root: "{{ local_root_path }}/git"
+gits:
+  - git_repo: "https://opendev.org/openstack/kolla.git"
+    git_clone_dest: "{{ dest_root }}/kolla"
+    version: "stable/2023.2"
+    git_filename: "file:///{{ dest_root }}/kolla"
+
+  - git_repo: "https://opendev.org/openstack/kolla-ansible.git"
+    git_clone_dest: "{{ dest_root }}/kolla-ansible"
+    version: "stable/2023.2"
+    git_filename: "file:///{{ dest_root }}/kolla-ansible"
+
+
 ####################################################################
 # REPOSITORY_NGINX_CONTINAER_CONFIG 
 ####################################################################

@@ -1,0 +1,7 @@
+---
+- name: Install Kolla-ansible
+  hosts: localhost
+  tasks:
+    - name: install kolla ansible 
+      import_role:
+        name: install-kolla-ansible
