@@ -1,0 +1,7 @@
+
+- name: config pypi 
+  hosts: pre-deploy
+  tasks:
+    - name: Configure PyPi Client
+      import_role:
+        name: configure-pypi-client

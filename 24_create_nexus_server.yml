@@ -5,10 +5,6 @@
       import_role:
         name: create-nexus-server
 
-    - name: Configure PyPi Client
-      import_role:
-        name: configure-pypi-client
-
     - name: Find all files in the remote directory
       find:
         paths: "{{ package_file_path }}"
